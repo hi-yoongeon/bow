@@ -5,6 +5,9 @@ require 'twitter'
 class LoginController < ApplicationController
 
 
+  def index
+    
+  end
 
   def facebook # 고창규님 구현
 
