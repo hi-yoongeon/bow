@@ -1,4 +1,5 @@
 class TwitterUserInfo < ActiveRecord::Base
+  belongs_to :user
   attr_accessible  :user_id, :token, :secret, :twitter_id, :screen_name, :profile_image_url
 
   def self.find_by_access_token access_token

@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_one :twitter_user_info
+
   attr_accessible :email, :screen_name
 
   @authorized = false
