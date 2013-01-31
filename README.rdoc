@@ -5,6 +5,9 @@ rails 3.9.2
 
 rake 10.0.3
 
+hosts
+  127.0.0.1		snsrc.daum.net
+
 == Getting Started
 
 $ bundle install
