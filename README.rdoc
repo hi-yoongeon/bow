@@ -1,12 +1,16 @@
 == environment
 Ruby version 1.9.3
+
 rails 3.9.2
+
 rake 10.0.3
 
 == Getting Started
 
 $ bundle install
+
 $ rake db:migrate
+
 $ rails server
 
 == Description of Contents
