@@ -1,7 +1,13 @@
 class KennelController < ApplicationController
 
-  def chat
+  before_filter :authorize
+
+  def bark
     
+  end
+
+  def create
+
   end
 
 end

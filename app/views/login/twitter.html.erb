@@ -1,8 +1,0 @@
-access_token: <%=@access_token%><br />
-acess_secret: <%=@access_secret%>
-<form action="/twitter/tweet" method="post">
-  <input type="hidden" name="access_token" value="<%=@access_token%>" />
-  <input type="hidden" name="access_secret" value="<%=@access_secret%>" />
-  <textarea name="tweet"></textarea>
-  <input type="submit" value="트윗테스트" />
-</form>

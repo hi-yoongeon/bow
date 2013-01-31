@@ -19,7 +19,7 @@ Bow::Application.routes.draw do
   match 'signup' => 'user#signup'
   match 'logout' => 'user#logout'
 
-  match 'kennel/:room_id' => 'kennel#chat'
+  match 'kennel/:room_id' => 'kennel#bark'
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
