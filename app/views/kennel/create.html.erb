@@ -1,1 +1,44 @@
-<h1>방만들기 </h1>
+<pre>
+
+	한페이지에서 두개화면 컨트롤
+	다음 버튼 누르면 "방만들기 화면" 가려지고 "SNS보내기 화면" 보여짐
+	SNS 보내기 버튼 누르면 최종적으로 server에 서브밋
+
+</pre>
+
+<form>
+
+	<fieldset>
+		<legend>방만들기 화면</legend>
+
+		<h3>어떤주제로 이야기하고 싶나요?</h3>
+		<textarea></textarea><br />
+		
+		<input type="text" name="positive_lable" value="좋아요" /><br />
+		<input type="text" name="negative_label" value="싫어용" /><br />
+		<input type="button" value="다음" />
+	</fieldset>
+
+
+	<fieldset>
+		<legend>SNS보내기 화면</legend>
+
+		<p>
+			새로운 방이 만들어졌습니다.<br />
+			SNS로 공유해서 친구를 초대해보세요
+		</p>
+
+		<textarea>공유되는 말 자동생성되서 들어감.. 수정가능</textarea>
+
+		<p>
+			<label>facebook <input type="checkbox" /></label>
+			<label>twitter <input type="checkbox" /></label>
+		</p>
+
+		<input type="submit" value="sns로 퍼트림" />
+	</fieldset>
+
+
+</form>
+
+
