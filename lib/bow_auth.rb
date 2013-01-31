@@ -1,4 +1,5 @@
 require 'twitter_oauth'
+require 'facebook_oauth'
 
 module Bow
   module Auth
@@ -49,6 +50,46 @@ module Bow
         args[:secret] = secret unless secret.empty?
         @client = TwitterOAuth::Client.new( args )
       end
+    end
+
+    class Facebook
+      APPLICATION_ID = "372779472820178"
+      APPLICATION_SECRET = "2c3fe5a80db0daf3345d1ba9be1c0aa2"
+      CALLBACK_URL = "http://snsrc.daum.net:3000/signin/facebook/callback"
+      
+      attr_accessor :redirect_url
+      attr_reader :client
+
+      def initialize code = ""
+        client_factory code
+      end
+
+
+      def authorize_url
+        @client.authorize_url
+      end
+
+      def access_token code
+
+        p code
+
+        @client.authorize :code => code
+      end
+
+      private
+      def client_factory code
+        option = {
+          :application_id => APPLICATION_ID,
+          :application_secret => APPLICATION_SECRET,
+          :callback => CALLBACK_URL
+        }
+
+        # option[:callback] = option[:callback] + args[:redirect_url] unless args[:redirect_url].nil?
+        option[:code] = code unless code.empty?
+        @client = FacebookOAuth::Client.new( option )
+      end
+
+
     end
 
   end

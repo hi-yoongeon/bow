@@ -9,9 +9,8 @@ class TwitterUserInfo < ActiveRecord::Base
 
   def self.add_twitter_info params
 
-    client = params[:client]
+    twitter_info = params[:twitter_info]
     access_token = params[:access_token]
-    twitter_info = client.info
     user_id = nil
 
     transaction do
@@ -25,13 +24,13 @@ class TwitterUserInfo < ActiveRecord::Base
       twitter_user_info.secret = access_token.secret
       twitter_user_info.twitter_id = twitter_info['id']
       twitter_user_info.screen_name = twitter_info['screen_name']
-      twitter_user_info.profile_image_url = twitter_info['profile_image_url']
+      #twitter_user_info.profile_image_url = twitter_info['profile_image_url']
       twitter_user_info.user_id = user.id
 
       twitter_user_info.save
     end
 
-    p "user_id => #{user_id}"
+    #p "user_id => #{user_id}"
 
     user_id
   end

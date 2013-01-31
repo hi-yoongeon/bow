@@ -38,3 +38,4 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem 'twitter_oauth'
+gem 'facebook_oauth'

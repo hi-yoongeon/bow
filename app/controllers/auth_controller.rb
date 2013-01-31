@@ -15,8 +15,9 @@ class AuthController < ApplicationController
   end
 
   def facebook
-    #facebook = current_user.oauth_facebook = Bow::Auth::Facebook.new
-    #redirect_to facebook.authorize_url
+    auth_facebook = session[:auth_facebook] = Bow::Auth::Facebook.new
+    session[:redirect_url] = params[:redirect_url]
+    redirect_to auth_facebook.authorize_url
   end
 
   def callback
@@ -35,10 +36,10 @@ class AuthController < ApplicationController
 
     if twitter_user_info.empty?
       #p "insert twitter_user_info & signup"
-      session[:user_id] = TwitterUserInfo.add_twitter_info :access_token => access_token, :client => auth_twitter.client
-      p twitter_user_info = auth_twitter.client.info
+      twitter_info = auth_twitter.client.info
+      session[:user_id] = TwitterUserInfo.add_twitter_info :access_token => access_token, :twitter_info => twitter_info
       session[:auth_twitter] = nil
-      redirect_to "/signup?redirect_url=#{params[:redirect_url]}&nickname=#{twitter_user_info['screen_name']}"
+      redirect_to "/signup?redirect_url=#{params[:redirect_url]}&nickname=#{twitter_info['screen_name']}"
     else
       #p twitter_user_info
       session[:user_id] = twitter_user_info[0].user_id
@@ -50,7 +51,27 @@ class AuthController < ApplicationController
   end
 
   def facebook_callback
-    
+    code = params[:code]
+    redirect_url = session[:redirect_url]
+    auth_facebook = session[:auth_facebook]
+    access_token = auth_facebook.access_token code
+    session[:redirect_url] = nil
+
+    token = access_token.token
+
+    facebook_user_info = FacebookUserInfo.find_by_token token
+
+    if facebook_user_info.empty?
+      facebook_info = auth_facebook.client.me.info
+      session[:user_id] = FacebookUserInfo.add_facebook_info :token => token, :facebook_info => facebook_info
+      session[:auth_facebook] = nil
+      redirect_to "/signup?redirect_url=#{redirect_url}&nickname=#{facebook_info['username']}"
+    else
+      session[:user_id] = facebook_user_info[0].user_id
+      session[:auth_facebook] = nil
+      redirect_to redirect_url
+    end
+
   end
 
 

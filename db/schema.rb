@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130130170004) do
+ActiveRecord::Schema.define(:version => 20130131085156) do
 
   create_table "chat_logs", :force => true do |t|
     t.text     "log"
@@ -24,8 +24,11 @@ ActiveRecord::Schema.define(:version => 20130130170004) do
   create_table "facebook_user_infos", :force => true do |t|
     t.string   "access_key"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "facebook_id"
+    t.string   "screen_name"
+    t.string   "token"
   end
 
   create_table "rooms", :force => true do |t|
@@ -36,13 +39,12 @@ ActiveRecord::Schema.define(:version => 20130130170004) do
 
   create_table "twitter_user_infos", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "token"
     t.string   "secret"
     t.string   "twitter_id"
     t.string   "screen_name"
-    t.string   "profile_image_url"
   end
 
   create_table "users", :force => true do |t|
