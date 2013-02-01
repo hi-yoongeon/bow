@@ -18,7 +18,7 @@ module Bow
 
       def create_kennel params
         k = Kennel.new params
-        k.enter params[:user]
+        # k.enter params[:user]
         @kennel_list << k
         k
       end
@@ -26,7 +26,7 @@ module Bow
       def kennel kennel_id
         k = nil
         @kennel_list.each do |kennel|
-          k = kennel if kennel.id == kennel_id
+          k = kennel if kennel.id.to_i == kennel_id.to_i
         end
         k
       end

@@ -36,7 +36,9 @@ module Bow
         @client.update status
       end
 
-      def send message
+      def send message, kennel
+        message = message[0..90]
+        message = message + " http://seoho.me:3000/bark/#{kennel.id}" unless kennel.nil?
         tweet message
       end
 
@@ -74,7 +76,8 @@ module Bow
         @client.authorize :code => code
       end
 
-      def send message
+      def send message, kennel
+        message = message + " http://seoho.me:3000/bark/#{kennel.id}" unless kennel.nil?
         @client.me.feed(:create, :message => message)
       end
 
