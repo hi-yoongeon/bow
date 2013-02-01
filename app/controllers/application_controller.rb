@@ -6,8 +6,10 @@ class ApplicationController < ActionController::Base
   before_filter :authorized_user
 
 
-  def sns_message params
-    sns_send params[:type], params[:msg], Bow::Room::KennelManager.instace.kennel params[:kennel_id]
+  def sns_message
+    k = Bow::Room::KennelManager.instance.kennel, params[:kennel_id] unless params[:kennel_id].nil?
+    sns_send params[:type], params[:msg], k
+#    render :text => "200"
   end
 
   protected
