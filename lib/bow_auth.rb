@@ -36,6 +36,11 @@ module Bow
         @client.update status
       end
 
+      def send message
+        tweet message
+      end
+
+
       private
       def client_factory token = "", secret = ""
         args = {
@@ -67,6 +72,10 @@ module Bow
 
       def access_token code
         @client.authorize :code => code
+      end
+
+      def send message
+        @client.me.feed(:create, :message => message)
       end
 
       private

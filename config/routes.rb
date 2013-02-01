@@ -18,6 +18,7 @@ Bow::Application.routes.draw do
   match 'signin/:type/callback' => 'auth#callback'
   get 'signup' => 'user#signup'
   post 'signup' => 'user#signup_ok'
+  post 'kennel/create' => 'kennel#create_ok'
   match 'logout' => 'user#logout'
 
   match 'bark/:room_id' => 'kennel#bark'

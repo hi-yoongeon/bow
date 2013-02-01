@@ -1,1 +1,14 @@
 <h2>채팅방</h2>
+<input type="hidden" id="myName" value="<%=@nickname%>" />
+<input type="hidden" id="myRoom" value="<%=@kennel_id%>" />
+<div id="chat" style="overflow-y:scroll;width:400px;height:200px;border:1px solid black;"></div>
+
+<form>
+	<input id="message" type="text" style="width:300px;">
+	<input type="submit" value="send">
+</form>
+
+
+
+<script src="http://snsrc.daum.net:8000/socket.io/socket.io.js"></script>
+<script src="/javascripts/bark.js"></script>

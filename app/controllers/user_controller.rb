@@ -7,8 +7,6 @@ class UserController < ApplicationController
   public
   def signup
     @ss_id, @screen_name = get_user_id_from_oauth_client_info
-
-
   end
 
   def signup_ok

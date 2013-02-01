@@ -6,13 +6,13 @@
 
 </pre>
 
-<form>
-
+<form method="post" action="/kennel/create">
+	<input type="hidden" name="authenticity_token" value="<%=session[:session_id]%>" />
 	<fieldset>
 		<legend>방만들기 화면</legend>
 
 		<h3>어떤주제로 이야기하고 싶나요?</h3>
-		<textarea></textarea><br />
+		<textarea name="title"></textarea><br />
 		
 		<input type="text" name="positive_lable" value="좋아요" /><br />
 		<input type="text" name="negative_label" value="싫어용" /><br />
@@ -28,11 +28,11 @@
 			SNS로 공유해서 친구를 초대해보세요
 		</p>
 
-		<textarea>공유되는 말 자동생성되서 들어감.. 수정가능</textarea>
+		<textarea name="message">공유되는 말 자동생성되서 들어감.. 수정가능</textarea>
 
 		<p>
-			<label>facebook <input type="checkbox" /></label>
-			<label>twitter <input type="checkbox" /></label>
+			<label>facebook <input type="checkbox" <% unless @facebook.nil? %> checked="checked"<% end %> name="sns_send[]" value="facebook" /></label>
+			<label>twitter <input type="checkbox" <% unless @twitter.nil? %> checked="checked"<% end %> name="sns_send[]" value="twitter" /></label>
 		</p>
 
 		<input type="submit" value="sns로 퍼트림" />

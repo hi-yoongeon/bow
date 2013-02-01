@@ -41,12 +41,10 @@ class AuthController < ApplicationController
       session[:oauth_type] = "twitter"
       redirect_to "/signup"
     else
-      session[:user_id] = twitter_user_info[0].user_id
+      factory_user_session twitter_user_info[0].user_id
       session[:redirect_url] = nil
       redirect_to redirect_url
     end
-
-
   end
 
   def facebook_callback
@@ -64,7 +62,7 @@ class AuthController < ApplicationController
       #session[:auth_facebook] = nil
       redirect_to "/signup"
     else
-      session[:user_id] = facebook_user_info[0].user_id
+      factory_user_session facebook_user_info[0].user_id
       redirect_url = session[:redirect_url];session[:redirect_url] = nil
       redirect_to redirect_url
     end

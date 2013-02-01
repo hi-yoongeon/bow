@@ -1,5 +1,5 @@
 class FacebookUserInfo < ActiveRecord::Base
-  attr_accessible :access_key, :user_id
+  belongs_to :user
 
   def self.find_by_token token
     FacebookUserInfo.where :token => token
