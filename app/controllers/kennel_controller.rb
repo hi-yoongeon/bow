@@ -37,7 +37,7 @@ class KennelController < ApplicationController
     kennel = Bow::Room::KennelManager.instance.create_kennel params
 
     params[:sns_send].each do |sns|
-      sns_send sns, params[:message], kennel
+      sns_send sns, params[:message], kennel unless sns.empty?
     end
 
     redirect_to "/bark/#{kennel.id}?permit=creator"
