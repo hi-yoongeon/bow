@@ -7,6 +7,15 @@ class UserController < ApplicationController
   public
   def signup
     @ss_id, @screen_name = get_user_id_from_oauth_client_info
+
+    p session
+
+    if session[:oauth_type] == "twitter"
+      @profile_image = "https://api.twitter.com/1/users/profile_image?screen_name=#{@screen_name}&size=bigger"
+    else
+      @profile_image = "http://graph.facebook.com/#{@ss_id}/picture?type=square"
+    end
+
   end
 
   def signup_ok

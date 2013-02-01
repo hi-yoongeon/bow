@@ -8,6 +8,7 @@ class KennelController < ApplicationController
   def bark
     # @kennel_id = params[:room_id]
     # @nickname = @current_user.nickname
+    @viewport = true
     @kennel_id = 1
     @nickname = 'jeong'
 
