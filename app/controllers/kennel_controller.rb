@@ -12,13 +12,14 @@ class KennelController < ApplicationController
     @kennel_id = 1
     @nickname = 'jeong'
 
-    k = Bow::Room::KennelManager.instance.kennel params[:room_id]
-    k.enter session[:user]
+    # for 규용
+    #k = Bow::Room::KennelManager.instance.kennel params[:room_id]
+    #k.enter session[:user]
 
 
-    if params[:permit] != "creator"
-      sns_send "all", "#{k.title} 토론방에 참여했습니다", k
-    end
+    #if params[:permit] != "creator"
+    #  sns_send "all", "#{k.title} 토론방에 참여했습니다", k
+    #end
   end
 
   def create
