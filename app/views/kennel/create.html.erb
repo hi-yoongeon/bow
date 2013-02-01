@@ -6,10 +6,11 @@
  </div>
  <div class="create_body">
 	  <div class="create_form">
-		   <form action="/signup" method="post">
+		   <form action="/kennel/create" method="post">
+		   		<input type="hidden" name="authenticity_token" value="<%=session[:session_id]%>" />
 				<div class="create_page">
 					 <span class="create_lb"><img src="/images/dog_black2.png" width="41" height="35" alt="dog" >&nbsp;어떤 주제로 대화하고 싶나요?</span>
-					 <textarea id="roomSubject" class="create_text_input" rows="2" name="title" placeholder="대화방의 주제를 입력하세요."></textarea>
+					 <textarea id="roomSubjectTemp" class="create_text_input" rows="2" name="title" placeholder="대화방의 주제를 입력하세요."></textarea>
 					 <span class="create_lb lst"><img src="/images/dog_black2.png" width="41" height="35" alt="dog" >&nbsp;찬반 문구를 선택해 주세요.</span>
 
 					 <div class="create_select_votetype">
@@ -59,10 +60,11 @@
 						  <span class="sns_name">Twitter<br/><span class="sns_personal_info">ygmaster</span></span>
 					 </div>
 
+					 <input type="hidden" id="roomSubject" name="message" value="" />
 					 <input type="hidden" id="positiveLabel" name="positive_label" value="" />
 					 <input type="hidden" id="negativeLabel" name="negative_label" value="" />
 					 <input type="hidden" id="facebook" name="sns_send[]" value="<% unless @facebook.nil? %>facebook<% end %>" />
-					 <input type="hidden" id="twitter" name="sns_send[]" value="<% unless @twitter.nil? %>twitter<% end %> " />
+					 <input type="hidden" id="twitter" name="sns_send[]" value="<% unless @twitter.nil? %>twitter<% end %>" />
 					 <input class="create_submit circle" type="submit" value="SNS에 퍼트리기" />
 				</div>
 		   </form>
@@ -118,7 +120,8 @@ RoomController.prototype = {
           }
      },
      btnNextHandler : function(){
-          $("#displaySubject")[0].innerHTML = "\"" + $("#roomSubject")[0].value + "\"";
+          $("#displaySubject")[0].innerHTML = "\"" + $("#roomSubjectTemp")[0].value + "\"";
+          $("#roomSubject")[0].value = "\"" + $("#roomSubjectTemp")[0].value + "\" 토론방을 개설했습니다. 당신의 의견은 어떤가요?";
           $("#positiveLabel")[0].value = $(this.voteWords[this.selectedVoteWord]).children()[0].innerHTML;
           $("#negativeLabel")[0].value = $(this.voteWords[this.selectedVoteWord]).children()[1].innerHTML;
           $(this.pages[0]).hide();
