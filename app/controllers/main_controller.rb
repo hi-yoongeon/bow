@@ -1,7 +1,12 @@
+require 'bow_room'
+
 class MainController < ApplicationController
 
   def index
-    p verify_authenticity_token
+    
+    @room_list = Bow::Room::KennelManager.instance.list
+
+    p @room_list
 
     # @twitter_info = current_user.twitter_user_info
 

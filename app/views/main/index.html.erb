@@ -1,4 +1,75 @@
-<div>
+	<div class="main_top">
+		<a href="/" class="top_logo" title="bow 메인화면으로 가기"><img src="/images/top_logo.png" width="196" height="27" alt="bow" ></a>
+		<a href="/signin" class="btn_login"><img src="/images/log_in.png" width="132" height="47" alt="login" ></a>
+		<a href="javascript:;" class="btn_logout"><img src="/images/log_out.png" width="132" height="47" alt="logout" ></a>
+	</div>
+	<div class="main_display">
+		<div class="main_profile_photo_frame circle">
+			<img class="main_profile_photo circle" src="/images/4.png" width="160" height="160" alt="GD" >
+		</div>
+		<div class="main_welcome_text">
+			<p>같이 이야기하고 싶은 이슈가 있나요?<br/>지금 BOW방을 만들어 SNS로 퍼트려보세요!</p>
+		</div>
+		<div >
+			<a href="/kennel/create" class="main_btn_start circle">시작하기</a>
+		</div>
+	</div>
+	<div class="main_content">
+		<div class="cont_btn_wrap">
+			<a href="javascript:;" class="cont_btn"><img src="/images/bt_now_blue.png" width="280" height="73" alt="now" ></a>
+			<a href="javascript:;" class="cont_btn lst"><img src="/images/bt_hot_grey.png" width="280" height="73" alt="hot" ></a>
+		</div>
+		<ul class="cont_list">
+			<li class="of_h">
+				<div class="cont_title">정규용, "김태희가 만나자고 해도 안만난다" 발언 이게 말인가?</div>
+				<div class="cont_info_wrap">
+					<ul>
+						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
+						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
+						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
+					</ul>
+					<span class="cont_member">외 <span class="cont_member_number">350</span>명</span>
+					<span class="cont_time">01:34분째 BOW중</span>
+				</div>
+				<div class="clr cont_stick_wrap">
+					<div style="width:370px;" class="cont_stick_common cont_stick_left cont_stick_yellow"></div>
+					<div style="width:230px;" class="cont_stick_common cont_stick_right cont_stick_gray"></div>
+					<img class="cont_ico_dog" src="/images/dog_black.png" width="46" height="40" alt="GD" >
+				</div>
+			</li>
+			<li class="of_h">
+				<div class="cont_title">정규용, "김태희가 만나자고 해도 안만난다" 발언 이게 말인가?</div>
+				<div class="cont_info_wrap">
+					<ul>
+						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
+						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
+						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
+					</ul>
+					<span class="cont_member">외 <span class="cont_member_number">350</span>명</span>
+					<span class="cont_time">01:34분째 BOW중</span>
+				</div>
+				<div class="clr cont_stick_wrap">
+					<div style="width:370px;" class="cont_stick_common cont_stick_left cont_stick_yellow"></div>
+					<div style="width:230px;" class="cont_stick_common cont_stick_right cont_stick_gray"></div>
+					<img class="cont_ico_dog" src="/images/dog_black.png" width="46" height="40" alt="GD" >
+				</div>
+			</li>
+		</ul>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--div>
 	<a href="/kennel/create">새 BOW방 만들기</a>
 </div>
 
@@ -6,3 +77,12 @@
 	<li><a href="/now">BoW NOW</a></li>
 	<li><a href="/hot">BoW HOT</a></li>
 </ul>
+
+
+<h2>채팅방리스트</h2>
+
+<ul>
+	<% @room_list.each do |room| %>
+	<li><a href="/bark/<%=room.id%>"><%=room.title%></a></li>
+	<% end %>
+</ul-->

@@ -25,10 +25,14 @@ module Bow
 
       def kennel kennel_id
         k = nil
-        kennel_list.each do |kennel|
+        @kennel_list.each do |kennel|
           k = kennel if kennel.id == kennel_id
         end
         k
+      end
+
+      def list
+        @kennel_list
       end
 
     end
