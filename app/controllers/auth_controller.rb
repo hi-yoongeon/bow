@@ -9,13 +9,14 @@ class AuthController < ApplicationController
   end
 
   def twitter
-    auth_twitter = session[:auth_twitter] = Bow::Auth::Twitter.new
-    auth_twitter.redirect_url = params[:redirect_url]
+    auth_twitter = session[:oauth] = Bow::Auth::Twitter.new
+    #auth_twitter.redirect_url = params[:redirect_url]
+    session[:redirect_url] = params[:redirect_url]
     redirect_to auth_twitter.authorize_url
   end
 
   def facebook
-    auth_facebook = session[:auth_facebook] = Bow::Auth::Facebook.new
+    auth_facebook = session[:oauth] = Bow::Auth::Facebook.new
     session[:redirect_url] = params[:redirect_url]
     redirect_to auth_facebook.authorize_url
   end
@@ -28,47 +29,43 @@ class AuthController < ApplicationController
   end
 
   def twitter_callback
-
-    auth_twitter = session[:auth_twitter]
+    auth_twitter = session[:oauth]
     access_token = auth_twitter.access_token params[:verifier]
-    twitter_user_info = TwitterUserInfo.find_by_access_token(access_token)
-    need_signup = false
+    session[:token], session[:secret] = access_token.token, access_token.secret
+    redirect_url = session[:redirect_url]
 
+    twitter_user_info = TwitterUserInfo.find_by_access_token(access_token)
+
+    session[:oauth] = nil
     if twitter_user_info.empty?
-      #p "insert twitter_user_info & signup"
-      twitter_info = auth_twitter.client.info
-      session[:user_id] = TwitterUserInfo.add_twitter_info :access_token => access_token, :twitter_info => twitter_info
-      session[:auth_twitter] = nil
-      redirect_to "/signup?redirect_url=#{params[:redirect_url]}&nickname=#{twitter_info['screen_name']}"
+      session[:oauth_type] = "twitter"
+      redirect_to "/signup"
     else
-      #p twitter_user_info
       session[:user_id] = twitter_user_info[0].user_id
-      session[:auth_twitter] = nil
-      redirect_to params[:redirect_url]
+      session[:redirect_url] = nil
+      redirect_to redirect_url
     end
 
 
   end
 
   def facebook_callback
-    code = params[:code]
-    redirect_url = session[:redirect_url]
-    auth_facebook = session[:auth_facebook]
-    access_token = auth_facebook.access_token code
-    session[:redirect_url] = nil
+    access_token = session[:oauth].access_token params[:code]
+    session[:token] = access_token.token
+    facebook_user_info = FacebookUserInfo.find_by_token session[:token]
+    session[:oauth] = nil
 
-    token = access_token.token
-
-    facebook_user_info = FacebookUserInfo.find_by_token token
+    p "token : #{session[:token]}"
 
     if facebook_user_info.empty?
-      facebook_info = auth_facebook.client.me.info
-      session[:user_id] = FacebookUserInfo.add_facebook_info :token => token, :facebook_info => facebook_info
-      session[:auth_facebook] = nil
-      redirect_to "/signup?redirect_url=#{redirect_url}&nickname=#{facebook_info['username']}"
+      session[:oauth_type] = "facebook"
+      #facebook_info = auth_facebook.client.me.info
+      #session[:user_id] = FacebookUserInfo.add_facebook_info :token => token, :facebook_info => facebook_info
+      #session[:auth_facebook] = nil
+      redirect_to "/signup"
     else
       session[:user_id] = facebook_user_info[0].user_id
-      session[:auth_facebook] = nil
+      redirect_url = session[:redirect_url];session[:redirect_url] = nil
       redirect_to redirect_url
     end
 

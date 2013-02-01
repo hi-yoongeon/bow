@@ -16,7 +16,8 @@ Bow::Application.routes.draw do
   match 'signin' => 'auth#signin'
   #match 'signin(/:action)'
   match 'signin/:type/callback' => 'auth#callback'
-  match 'signup' => 'user#signup'
+  get 'signup' => 'user#signup'
+  post 'signup' => 'user#signup_ok'
   match 'logout' => 'user#logout'
 
   match 'bark/:room_id' => 'kennel#bark'

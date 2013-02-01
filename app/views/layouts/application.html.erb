@@ -11,8 +11,12 @@
 	<header>
 		<h1><a href="/">BOW</a></h1>
 		<ul>
+
+			<% if @current_user.nil? %>
 			<li><a href="/signin">sign in</a></li>
-			<li><a href="/logout">logout</a></li>
+			<% else %>
+			<li><a href="/logout">logout</a> (<%=@current_user.nickname%>)</li>
+			<% end %>
 			<li><a href="/my">MY</a></li>
 		</ul>
 	</header>

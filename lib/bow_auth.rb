@@ -4,23 +4,20 @@ require 'facebook_oauth'
 module Bow
   module Auth
     class Twitter
-
-      attr_accessor :redirect_url
-
       CONSUMER_KEY = "dX2ETek44FXOmLYexqJ1xA"
       CONSUMER_SECRET = "PM0mLkZyieTTW6SiknR26T59o9Icd0caprB2U7TU"
-      CALLBACK_URL = "http://snsrc.daum.net:3000/signin/twitter/callback?redirect_url="
+      CALLBACK_URL = "http://snsrc.daum.net:3000/signin/twitter/callback"
 
       attr_reader :client
 
-      def initialize access_token="", access_secret=""
-        client_factory access_token, access_secret
+      def initialize token = "", secret = ""
+        client_factory token, secret
       end
 
       public
       def authorize_url
         @request_token = @client.request_token(
-                                         :oauth_callback => CALLBACK_URL + redirect_url
+                                         :oauth_callback => CALLBACK_URL
                                          )
         @request_token.authorize_url
       end
@@ -56,12 +53,11 @@ module Bow
       APPLICATION_ID = "372779472820178"
       APPLICATION_SECRET = "2c3fe5a80db0daf3345d1ba9be1c0aa2"
       CALLBACK_URL = "http://snsrc.daum.net:3000/signin/facebook/callback"
-      
-      attr_accessor :redirect_url
+
       attr_reader :client
 
-      def initialize code = ""
-        client_factory code
+      def initialize token = ""
+        client_factory token
       end
 
 
@@ -70,22 +66,18 @@ module Bow
       end
 
       def access_token code
-
-        p code
-
         @client.authorize :code => code
       end
 
       private
-      def client_factory code
+      def client_factory token
         option = {
           :application_id => APPLICATION_ID,
           :application_secret => APPLICATION_SECRET,
           :callback => CALLBACK_URL
         }
 
-        # option[:callback] = option[:callback] + args[:redirect_url] unless args[:redirect_url].nil?
-        option[:code] = code unless code.empty?
+        option[:token] = token unless token.empty?
         @client = FacebookOAuth::Client.new( option )
       end
 
