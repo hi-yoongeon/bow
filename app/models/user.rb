@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
     @auth_twitter
   end
 
+  
 
   def authorized?
     @authorized

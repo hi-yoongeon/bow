@@ -27,14 +27,25 @@ class ApplicationController < ActionController::Base
     facebook_oauth.send msg if type == "facebook"
   end
 
+  def profile_image
+    twitter_user_info = @current_user.twitter_user_info
+    facebook_user_info = @current_user.facebook_user_info
+    unless twitter_user_info.nil?
+      return "https://api.twitter.com/1/users/profile_image?screen_name=#{twitter_user_info.screen_name}&size=bigger"
+    end
+    unless facebook_user_info.nil?
+      return "http://graph.facebook.com/#{facebook_user_info.facebook_id}/picture?type=square"
+    end
+  end
+
   def twitter_oauth
     info = @current_user.twitter_user_info
-    Bow::Auth::Twitter.new info.token, info.secret
+    Bow::Auth::Twitter.new info.token, info.secret unless info.nil?
   end
 
   def facebook_oauth
     info = @current_user.facebook_user_info
-    Bow::Auth::Facebook.new info.token
+    Bow::Auth::Facebook.new info.token unless info.nil?
   end
 
   def clean_session
