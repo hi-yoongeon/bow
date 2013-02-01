@@ -27,6 +27,7 @@
 	.circle {border-radius:100px;}
 	.of_h {overflow:hidden;}
 	.clr {clear:both;}
+	.hide {display:none;}
 
 	/*메인 페이지*/
 	.main_top {width:100%;height:72px;background-color:#222126;}
@@ -116,6 +117,55 @@
 	.join_body .join_form .join_warn_txt {display:none;font-size:22px;color:#E10000;margin-top:5px;}
 	.join_body .join_form .join_submit {width:292px;height:70px;border:none;margin:40px 0 0 149px;padding:0;font:bold 34px 'Nanum Gothic', sans-serif;color:#FFF;background-color:#F66B68;box-shadow:1px 1px 1px #777;}
 	.join_body .join_footer {margin:244px auto 32px;width:277px;}
+
+	/*createroom*/
+	.create_top {width:100%;height:128px;background:url("/images/2_top_bg.png");}
+	.create_top .create_header {float:left;margin:20px 0 0 15px;}
+	.create_top .create_header .create_logo {float:left;}
+	.create_top .create_header .create_title {float:left;margin:3px 0 0 7px;font-size:22px;color:#FFF;}
+	.create_body {overflow:hidden;
+	background-image: linear-gradient(bottom, #F9F9F9 23%, #FFF 66%);
+	background-image: -webkit-gradient(
+	     linear,
+	     left bottom,
+	     left top,
+	     color-stop(0.33, #F9F9F9),
+	     color-stop(0.86, #FFF )
+	);}
+	.create_body .create_form {width:590px;margin:40px auto 0;}
+	.create_body .create_form .create_lb {display:block;margin-bottom:15px;font-size:32px;font-weight:bold;}
+	.create_body .create_form .create_lb.lst {margin-top:30px;}
+	.create_body .create_form .create_text_input {padding: 15px 15px;width:558px;height:70px;font:bold 28px 'Nanum Gothic', sans-serif;color:#93939D;}
+	.create_body .create_form .create_select_votetype {border:1px solid #E4E4E4;}
+	.create_body .create_form .create_select_votetype .create_select_votetype_title {margin:28px 0 0 34px;color:#90909A;font-size:22px;}
+	.create_body .create_form .create_select_votetype .votetype_wrap {overflow:hidden;margin:37px auto 22px;width:522px;}
+	.create_body .create_form .create_select_votetype .btn_move {float:left;width:35px;height:54px;text-indent:-9999em;margin-top:50px;}
+	.create_body .create_form .create_select_votetype .btn_move_left {background:url("/images/vote_arrow_left.png") no-repeat;margin-right:52px;}
+	.create_body .create_form .create_select_votetype .btn_move_right {background:url("/images/vote_arrow_right.png") no-repeat;margin-left:52px;}
+	.create_body .create_form .create_select_votetype .vote_content_wrap {float:left;}
+	.create_body .create_form .create_select_votetype .vote_content_wrap .voteword {float:left;width:160px;height:160px;background-color:#CFCFD5;font:bold 38px 'Nanum Gothic',
+	sans-serif;color:#FFF;text-align:center;line-height:164px;}
+	.create_body .create_form .create_select_votetype .vote_content_wrap .voteword.lst {margin-left:28px;}
+	.create_body .create_form .create_select_votetype .votepage_navi_wrap {text-align:center;margin-bottom:20px;}
+	.create_body .create_form .create_select_votetype .votepage_navi_wrap .votepage_navi {display:inline-block;width:16px;height:16px;background-color:#E0E0E4;}
+	.create_body .create_form .create_select_votetype .votepage_navi_wrap .votepage_navi.on {background-color:#15AEFF;}
+	.create_body .create_form .create_btn_next {width:292px;height:70px;border:none;margin:40px 0 0 149px;padding:0;background:url("/images/next_bt.png") no-repeat;text-indent:-9999em;box-shadow:1px 1px 1px #777;}
+	.create_body .create_form .room_info_wrap {border:6px solid #73737C;border-radius:10px;text-align:center;}
+	.create_body .create_form .room_info_wrap .room_info {font-size:22px;color:#90909A;margin:20px 0;}
+	.create_body .create_form .room_info_wrap .room_theme {margin-top:25px;font-size:26px;line-height:30px;}
+	.create_body .create_form .sns_info {height:100px;border-radius:10px;}
+	.create_body .create_form .facebook_info {background-color:#3B5998;margin-top:30px;}
+	.create_body .create_form .twitter_info {background-color:#00ACED;margin-top:16px;}
+	.create_body .create_form .sns_info.off {background-color:#B1B1B1;}
+	.create_body .create_form .sns_info .checkbox {float:left;margin:18px 0 0 5px;}
+	.create_body .create_form .sns_info .sns_name {float:left;margin:15px 0 0 15px;font:bold 38px 'Nanum Gothic', sans-serif;color:#FFF;}
+	.create_body .create_form .sns_info .sns_name .sns_personal_info {float:left;font-size:18px;}
+	.create_body .create_form .sns_info .btn_on .check_on {display:block;}
+	.create_body .create_form .sns_info .btn_on .check_off {display:none;}
+	.create_body .create_form .sns_info .btn_off .check_on {display:none;}
+	.create_body .create_form .sns_info .btn_off .check_off {display:block;}
+	.create_body .create_form .create_submit {width:292px;height:70px;border:none;margin:40px 0 0 149px;padding:0;font:bold 34px 'Nanum Gothic', sans-serif;color:#FFF;background-color:#F66B68;box-shadow:1px 1px 1px #777;}
+	.create_body .create_footer {margin:244px auto 32px;width:277px;}
 	</style>
 	<% end %>
 

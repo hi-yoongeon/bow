@@ -1,4 +1,146 @@
-<pre>
+
+<div class="create_top">
+	  <div class="create_header">
+		   <img class="create_logo" src="/images/logo_dog.png" width="30" height="27"><span class="create_title">대화 주제 선택</span>
+	  </div>
+ </div>
+ <div class="create_body">
+	  <div class="create_form">
+		   <form action="/signup" method="post">
+				<div class="create_page">
+					 <span class="create_lb"><img src="/images/dog_black2.png" width="41" height="35" alt="dog" >&nbsp;어떤 주제로 대화하고 싶나요?</span>
+					 <textarea id="roomSubject" class="create_text_input" rows="2" name="title" placeholder="대화방의 주제를 입력하세요."></textarea>
+					 <span class="create_lb lst"><img src="/images/dog_black2.png" width="41" height="35" alt="dog" >&nbsp;찬반 문구를 선택해 주세요.</span>
+
+					 <div class="create_select_votetype">
+						  <p class="create_select_votetype_title">대화 참여자가 주제에 대한 찬반 투표를 할 수 있습니다.</p>
+						  <div class="votetype_wrap">
+							   <a class="btn_move btn_move_left" href="javascript:;">좌</a>
+							   <div class="vote_content_wrap">
+									<div class="voteword circle">좋아요</div>
+									<div class="voteword circle lst">싫어요</div>
+							   </div>
+							   <div class="vote_content_wrap hide">
+									<div class="voteword circle">찬성</div>
+									<div class="voteword circle lst">반대</div>
+							   </div>
+							   <div class="vote_content_wrap hide">
+									<div class="voteword circle">YES</div>
+									<div class="voteword circle lst">NO</div>
+							   </div>
+							   <a class="btn_move btn_move_right" href="javascript:;">우</a>
+						  </div>
+						  <div class="votepage_navi_wrap">
+							   <span class="votepage_navi on circle"></span>
+							   <span class="votepage_navi circle"></span>
+							   <span class="votepage_navi circle"></span>
+						  </div>
+					 </div>
+					 <input id="nextBtn" class="create_btn_next circle" type="button" value="다음" />
+				</div>
+				<div class="create_page hide">
+					 <div class="room_info_wrap">
+						  <p class="room_info hide">현재 35명이</p>
+						  <p id="displaySubject" class="room_theme">"사면권은 대통령의 당연한 권리인가?<br/>여러분은 사면권을 어떻게 생각하시나요?"</p>
+						  <p class="room_info">대화방을 만들었습니다. 당신의 의견은 어떤가요?</p>
+					 </div>
+					 <div class="sns_info facebook_info <% if @facebook.nil? %>off<% end %>">
+						  <a class="sns_checkbox facebook <% if @facebook.nil? %>btn_off<% else %>btn_on<% end %>" href="javascript:;" >
+							   <img class="checkbox check_on" src="/images/check.png" width="60" height="60" alt="checkbox" >
+							   <img class="checkbox check_off" src="/images/un_check.png" width="60" height="60" alt="checkbox" >
+						  </a>
+						  <span class="sns_name">FaceBook<br/><span class="sns_personal_info">ygmaster</span></span>
+					 </div>
+					 <div class="sns_info twitter_info <% if @twitter.nil? %>off<% end %>">
+						  <a class="sns_checkbox twitter <% if @twitter.nil? %>btn_off<% else %>btn_on<% end %>" href="javascript:;" >
+							   <img class="checkbox check_on" src="/images/check.png" width="60" height="60" alt="checkbox" >
+							   <img class="checkbox check_off" src="/images/un_check.png" width="60" height="60" alt="checkbox" >
+						  </a>
+						  <span class="sns_name">Twitter<br/><span class="sns_personal_info">ygmaster</span></span>
+					 </div>
+
+					 <input type="hidden" id="positiveLabel" name="positive_label" value="" />
+					 <input type="hidden" id="negativeLabel" name="negative_label" value="" />
+					 <input type="hidden" id="facebook" name="sns_send[]" value="<% unless @facebook.nil? %>facebook<% end %>" />
+					 <input type="hidden" id="twitter" name="sns_send[]" value="<% unless @twitter.nil? %>twitter<% end %> " />
+					 <input class="create_submit circle" type="submit" value="SNS에 퍼트리기" />
+				</div>
+		   </form>
+	  </div>
+	  <div class="create_footer">
+		   <img src="/images/copyright.png" width="277" height="21" alt="copyright" >
+	  </div>
+ </div>
+
+<script type="text/javascript">
+var RoomController = function(){
+     this.moveBtns = $(".create_body .votetype_wrap .btn_move");
+     this.voteWords = $(".create_body .votetype_wrap .vote_content_wrap");
+     this.votePagePoints = $(".create_body .votepage_navi_wrap .votepage_navi");
+     this.nextBtn = $("#nextBtn")[0];
+     this.pages = $(".create_body .create_page");
+     this.snsCheckbox = $(".create_body .create_page .sns_checkbox");
+     this.snsSwitches = {facebook:<% if @facebook.nil? %>false<% else %>true<% end %>,twitter:<% if @twitter.nil? %>false<% else %>true<% end %>};
+}
+RoomController.prototype = {
+     init : function(){
+          this.selectedVoteWord = 0;
+          this.addEvent();
+     },
+     addEvent : function(){
+          var self = this;
+          for(var i=0;i<this.moveBtns.length;i++){
+               $(this.moveBtns[i]).bind("click",function(e){self.btnMoveHandler(i);});
+          }
+          for(var i=0;i<this.snsCheckbox.length;i++){
+               $(this.snsCheckbox[i]).bind("click",function(e){self.checkBoxHandler(e);});
+          }
+          $(this.nextBtn).bind("click",function(e){self.btnNextHandler();});
+     },
+     btnMoveHandler : function(index){
+          if(index==0){
+               if(this.selectedVoteWord==0){
+                    this.selectedVoteWord = 2;
+               }else{
+                    this.selectedVoteWord = this.selectedVoteWord - 1;
+               }
+          }else{
+               this.selectedVoteWord = (this.selectedVoteWord + 1)%3;
+          }
+          for(var i=0;i<this.voteWords.length;i++){
+               if(i==this.selectedVoteWord){
+                    $(this.voteWords[i]).show();
+                    $(this.votePagePoints[i]).addClass("on");
+               }else{
+                    $(this.voteWords[i]).hide();
+                    $(this.votePagePoints[i]).removeClass("on");
+               }
+          }
+     },
+     btnNextHandler : function(){
+          $("#displaySubject")[0].innerHTML = "\"" + $("#roomSubject")[0].value + "\"";
+          $("#positiveLabel")[0].value = $(this.voteWords[this.selectedVoteWord]).children()[0].innerHTML;
+          $("#negativeLabel")[0].value = $(this.voteWords[this.selectedVoteWord]).children()[1].innerHTML;
+          $(this.pages[0]).hide();
+          $(this.pages[1]).show();
+     },
+     checkBoxHandler : function(e){
+     	if(($(e.target.parentNode).hasClass("twitter") && this.snsSwitches.twitter) || ($(e.target.parentNode).hasClass("facebook") && this.snsSwitches.facebook)){
+          if($(e.target.parentNode).hasClass("btn_on")){
+               $(e.target.parentNode).removeClass("btn_on");
+               $(e.target.parentNode).addClass("btn_off");
+          }else{
+               $(e.target.parentNode).addClass("btn_on");
+               $(e.target.parentNode).removeClass("btn_off");
+          }
+      	}
+     }
+}
+var roomController = new RoomController();
+roomController.init();
+</script>
+
+<!-- <pre>
 
 	한페이지에서 두개화면 컨트롤
 	다음 버튼 누르면 "방만들기 화면" 가려지고 "SNS보내기 화면" 보여짐
@@ -39,6 +181,6 @@
 	</fieldset>
 
 
-</form>
+</form> -->
 
 
