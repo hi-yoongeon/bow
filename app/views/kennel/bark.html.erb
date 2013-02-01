@@ -263,7 +263,7 @@ function socketInit(config) {
   socket.emit('join', {roomName:myRoom, nickName:myName});
   var chatStr = function(nick, msg, profile, isMine) {
     
-  return '<li class="chat ' + (isMine ? bl : wh) + '">'
+  return '<li class="chat ' + (isMine ? 'bl' : 'wh') + '">'
     + '<div class="chatter_wrapper">'
       + '<div>'
         + '<img src="/images/pic.jpeg" class="profile" alt="" />'
