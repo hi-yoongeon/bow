@@ -1,8 +1,14 @@
+require 'bow_room'
 require 'bow_auth'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery :secret => "ygmaster"
   before_filter :authorized_user
+
+
+  def sns_message params
+    sns_send params[:type], params[:msg], Bow::Room::KennelManager.instace.kennel params[:kennel_id]
+  end
 
   protected
   def factory_user_session user_id

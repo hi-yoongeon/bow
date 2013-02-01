@@ -22,6 +22,7 @@ Bow::Application.routes.draw do
   match 'logout' => 'user#logout'
 
   match 'bark/:room_id' => 'kennel#bark'
+  get 'sns/message' => 'application#sns_message'
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
