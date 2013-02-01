@@ -28,6 +28,7 @@ class AuthController < ApplicationController
 
   def twitter_callback
     auth_twitter = session[:oauth]
+    p session
     access_token = auth_twitter.access_token params[:verifier]
     session[:token], session[:secret] = access_token.token, access_token.secret
     redirect_url = session[:redirect_url]

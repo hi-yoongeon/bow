@@ -1,4 +1,4 @@
-var socket = io.connect('http://snsrc.daum.net:8000/chat');
+var socket = io.connect('http://seoho.me:8000/chat');
 
 var chatWindow = $('#chat');
 var messageBox = $('#message');

@@ -13,15 +13,15 @@ class UserController < ApplicationController
     redirect_url = session[:redirect_url]
     user_id = facebook_signup params if session[:oauth_type] == "facebook"
     user_id = twitter_signup params if session[:oauth_type] == "twitter"
-
-    session[:user_id] = user_id
     clean_session
-
+    factory_user_session user_id
     redirect_to redirect_url
   end
 
   def logout
+    clean_session
     reset_session
+
     redirect_to '/'
   end
 
@@ -84,15 +84,6 @@ class UserController < ApplicationController
       facebook_user_info.save
     end
     user.id
-  end
-
-  def clean_session
-    session[:redirect_url] = nil
-    session[:token] = nil
-    session[:secret] = nil
-    session[:oauth_type] = nil
-    session[:oauth_info] = nil
-    session[:oauth] = nil
   end
 
 end

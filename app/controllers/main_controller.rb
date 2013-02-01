@@ -8,6 +8,9 @@ class MainController < ApplicationController
 
     p @room_list
 
+
+    p session
+
     # @twitter_info = current_user.twitter_user_info
 
     # p @twitter_info

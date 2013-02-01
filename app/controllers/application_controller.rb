@@ -37,5 +37,14 @@ class ApplicationController < ActionController::Base
     Bow::Auth::Facebook.new info.token
   end
 
+  def clean_session
+    session[:redirect_url] = nil
+    session[:token] = nil
+    session[:secret] = nil
+    session[:oauth_type] = nil
+    session[:oauth_info] = nil
+    session[:oauth] = nil
+  end
+
 
 end
