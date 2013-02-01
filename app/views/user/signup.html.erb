@@ -1,5 +1,31 @@
+<div class="join_top">
+     <div class="join_header">
+          <img class="join_logo" src="/images/logo_dog.png" width="30" height="27"><span class="join_title">간편가입</span>
+     </div>
+</div>
+<div class="join_body">
+     <div class="join_welcome_text">
+          <p><span class="join_id"><%=@screen_name%></span>님 안녕하세요!</p>
+     </div>
+     <div class="join_profile_photo_frame circle">
+          <img class="join_profile_photo circle" src="<%=@profile_image%>" width="160" height="160" alt="GD" >
+     </div>
+     <div class="join_form">
+          <form action="/signup" method="post">
+               <label class="join_lb" for="nickname"><img src="/images/dog_black2.png" width="41" height="35" alt="dog" >이름</label><input class="join_text_input" id="nickname" type="text" name="nickname" value="<%=@screen_name%>" placeholder="nickname" />
+               <label class="join_lb lst" for="email"><img src="/images/dog_black2.png" width="41" height="35" alt="dog" >이메일</label><input class="join_text_input" id="email" type="text" name="email" value="<%=@email%>" placeholder="email" />
+               <span class="join_warn_txt">이미 회원으로 등록된 주소입니다.</span>
+               <input class="join_submit circle" type="submit" value="가입신청" />
+          </form>
+     </div>
+     <div class="join_footer">
+          <img src="/images/copyright.png" width="277" height="21" alt="copyright" >
+     </div>
+</div>
+
+<!-- 
 <form action="/signup" method="post">
-	<input type="text" name="email" value="<%=@email%>" placeholder="email" /><br />
-	<input type="text" name="nickname" value="<%=@screen_name%>" placeholder="nickname" /><br />
-	<input type="submit" value="정보입력" />
-</form>
+     <input type="text" name="email" value="<%=@email%>" placeholder="email" /><br />
+     <input type="text" name="nickname" value="<%=@screen_name%>" placeholder="nickname" /><br />
+     <input type="submit" value="정보입력" />
+</form> -->

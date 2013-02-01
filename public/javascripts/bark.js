@@ -51,6 +51,29 @@ $('form').submit(function(e) {
 					 }
 				 });
 
+
+window.onbeforeunload = Call;
+//window.onunload = Call2;
+
+
+function Call(){
+	return "채팅방을 나가시겠습니까?";
+}
+
+/*
+function Call2(){
+	$.get("http://seoho.me:3000/seohohoo");	
+}
+*/
+
+
+$(window).unload( function(){
+					  alert("TEST");
+					  $.get("http://seoho.me:3000/seohohoo");	
+} );
+
+
+
 /*
 $('#joinBtn').click(function(e) {
 						//console.log(myRoom);
