@@ -56,6 +56,17 @@
   .share_menu {height:30px;background:#c1c1c1;box-shadow:inset 0 8px 8px -8px #696868, inset 0 -8px 8px -8px #696868;}
   .share_menu > span {float:left;display:block}
   .share_menu .ui-btn {float:right;margin-top:0px;}
+
+    #sharePopup {display:block;width:200px;height:158px;opacity:0.9}
+    #sharePopup .popup_title img {float:left}
+    #sharePopup .popup_title span {float:left;display:block;line-height:24px;padding-left:8px}
+    #sharePopup .popup_msg {clear:both;padding:10px;background:url('speech_bubble_left.png') no-repeat;background-position:0 13px}
+    #sharePopup .popup_msg span {display:block;line-height:28px;height:28px;background:#fff;text-shadow:none;border-radius:6px;text-align:center;color:black}
+    #sharePopup .popup_sns span {float:left;color:#c1c1c1;}
+    #sharePopup .popup_sns img {float:left;margin-left:4px;}
+    #sharePopup .popup_btn {border-top:1px solid #000;margin-top:43px;padding-top:10px;text-align:center;}
+
+
 </style>
 
 
@@ -72,9 +83,27 @@
     </div>
   </div>
 
+    <div id="sharePopup" data-role="popup" data-theme="a" data-overlay-theme="a" class="ui-content"> 
+      <div class="popup_title">
+        <img src="profile_white_dog.png" width="28" height="24" alt="" /><span>대화 공유하기</span>
+      </div>
+      <div class="popup_msg">
+        <span class="msg">배신자에게는 죽음뿐!!</span>
+      </div>
+      <div class="popup_sns">
+        <span>SNS</span>
+        <img src="co_share_f_d.png" class="share_fb" width="80" height="23" alt="" />
+        <img src="co_share_t_d.png" class="share_tw" width="80" height="23" alt="" />
+      </div>
+      <div class="popup_btn">
+        <img src="co_share_bt.png" class="send_btn" width="90" height"31" alt="" />
+        <img src="co_share_cancel.png" class="cancel_btn" width="90" height"31" alt="" />
+      </div>
+    </div>
+
 
   <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
-    <h1>사면권은 대통령의 당연한 권리인가? 여러분은 사면권을 어떻게 생각하시나요?</h1>
+    <h1><%=@title%></h1>
     <!--a href="#" class="left_panel" data-role="button" data-icon="bars" data-mini="true">B</a-->
     <!--a href="#sharePopup" class="left_panel" data-rel="popup" data-position-to="window" data-icon="bars" data-mini="true">B</a>
     <div data-role="popup" class="photopopup" id="sharePopup">
@@ -141,12 +170,65 @@ $(document).bind('pageinit', function() {
     }
   });
 
-  $('sharePopup').on({
-    popupbeforeposition: function() {
-       var maxHeight = $( window ).height() - 60 + "px";
-       $( "sharePopup img" ).css( "max-height", maxHeight );
+
+  $('.chatter').on('click', function() {
+    $('#sharePopup .msg').html(this.innerHTML);
+    $('#sharePopup').popup('open');
+  });
+
+
+  $('#sharePopup .share_fb').on('click', function() {
+    if ($(this).hasClass('fb_selected')) {
+      $(this).removeClass('fb_selected');
+      $(this).attr('src', 'co_share_f_d.png');
+    } else {
+      $(this).addClass('fb_selected');
+      $(this).attr('src', 'co_share_f.png');
     }
   });
+
+  $('#sharePopup .share_tw').on('click', function() {
+    if ($(this).hasClass('tw_selected')) {
+      $(this).removeClass('tw_selected');
+      $(this).attr('src', 'co_share_t_d.png');
+    } else {
+      $(this).addClass('tw_selected');
+      $(this).attr('src', 'co_share_t.png');
+    }
+  });
+
+  $('#sharePopup .send_btn').on('click', function() {
+    var type, msg, kennel_id;
+    if ($('#sharePopup .fb_selected').length > 0 && $('#sharePopup .tw_selected').length > 0) {
+      type = 'all';
+    } else if ($('#sharePopup .fb_selected').length > 0) {
+      type = 'facebook';
+    } else if ($('#sharePopup .tw_selected').length > 0) {
+      type = 'twitter';
+    } else {
+      type = '';
+    }
+
+    msg = $('#sharePopup .msg').html();
+    kennel_id = '<%=@kennel_id%>';
+
+    if (type !== '') {
+      $.ajax({
+        type: 'GET',
+        url: '/sns/message',
+        data: {type: type, msg: msg, kennel_id: kennel_id}
+      }).done(function(msg) {
+        if (msg === 'ok') {
+          alert('ok');
+        }
+      });
+    }
+  });
+
+  $('#sharePopup .cancel_btn').on('click', function() {
+    $('#sharePopup').popup('close');
+  });
+
 
   $('.chat').on('click', function(){
     //$(this).next().toggle();
@@ -179,8 +261,9 @@ function socketInit(config) {
 
 
   socket.emit('join', {roomName:myRoom, nickName:myName});
-  var chatStr = function(msg, profile) {
-  return '<li class="chat bl">'
+  var chatStr = function(nick, msg, profile, isMine) {
+    
+  return '<li class="chat ' + (isMine ? bl : wh) + '">'
     + '<div class="chatter_wrapper">'
       + '<div>'
         + '<img src="/images/pic.jpeg" class="profile" alt="" />'
@@ -189,7 +272,7 @@ function socketInit(config) {
         + '<div>'
           + '<p class="chatter">' + msg + '</p>'
         + '</div>'
-        + '<span class="chatter_info">이상 2분전</span>'
+        + '<span class="chatter_info">' + nick + '</span>'
       + '</div>'
     + '</div>'
   + '</li>';
@@ -197,9 +280,9 @@ function socketInit(config) {
 
 
 
-  var showMessage = function(msg, m) {
+  var showMessage = function(msg, m, isMine, nick) {
     console.log(msg);
-    chatWindow.append($(chatStr(m)));     
+    chatWindow.append($(chatStr(nick, m, undefined, isMine)));     
     chatWindow.listview('refresh');
     chatWindow.scrollTop(chatWindow.height());
   }
@@ -220,14 +303,14 @@ function socketInit(config) {
 
   socket.on('message', function(data) {
     console.log( data );
-    showMessage(data.nickName + ' : ' + data.msg, data.msg); 
+    showMessage(data.nickName + ' : ' + data.msg, data.msg, false, data.nickName); 
   });
 
   window.submit_text = function(t) {
     var msg = messageBox.val();
     console.log('>>', msg);
     if ($.trim(msg) !== '') {
-      showMessage(myName + ' : ' + msg, msg);
+      showMessage(myName + ' : ' + msg, msg, true, myName);
       socket.json.send({nickName:myName, msg:msg});
       messageBox.val('');
     }
