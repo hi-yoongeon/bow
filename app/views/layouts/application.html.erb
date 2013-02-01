@@ -11,8 +11,11 @@
 	<% else %>
 	<meta name="viewport" content="user-scalable=no, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, width=device-width" />
 	<% end %>
+
+
+	<% unless @viewport %>
 	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
-	<script src="/javascripts/bootstrap.min.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>	
 	<style type="text/css">
 	/*공통*/
 	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
@@ -114,6 +117,8 @@
 	.join_body .join_form .join_submit {width:292px;height:70px;border:none;margin:40px 0 0 149px;padding:0;font:bold 34px 'Nanum Gothic', sans-serif;color:#FFF;background-color:#F66B68;box-shadow:1px 1px 1px #777;}
 	.join_body .join_footer {margin:244px auto 32px;width:277px;}
 	</style>
+	<% end %>
+
 </head>
 <body>
 
