@@ -7,7 +7,7 @@ class KennelController < ApplicationController
   before_filter :authorize
 
   def enter
-    
+
   end
 
   def bark
@@ -21,6 +21,7 @@ class KennelController < ApplicationController
     k = Bow::Room::KennelManager.instance.kennel params[:room_id]
     k.enter session[:user]
 
+    @title = k.title
 
     if params[:permit] != "creator"
       sns_send "all", "#{k.title} 토론방에 참여했습니다", k
