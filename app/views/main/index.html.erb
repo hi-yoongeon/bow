@@ -28,11 +28,14 @@
 				<div class="cont_title"><a href="/bark/<%=room.id%>"><%=room.title%></a></div>
 				<div class="cont_info_wrap">
 					<ul>
-						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
-						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
-						<li class="cont_photo"><img class="circle" src="/images/4.png" width="40" height="40" alt="GD" ></li>
+						<% i = 0 %>
+						<% room.users.each do |user|  %>
+						<li class="cont_photo"><img class="circle" src="<%=user[:profile_image]%>" width="40" height="40" alt="GD" ></li>
+						<% i = i + 1 %>
+						<% break if i >= 5 %>
+						<% end %>
 					</ul>
-					<span class="cont_member">외 <span class="cont_member_number">350</span>명</span>
+					<span class="cont_member">외 <span class="cont_member_number"><%=room.users.size%></span>명</span>
 					<span class="cont_time">01:34분째 BOW중</span>
 				</div>
 				<div class="clr cont_stick_wrap">

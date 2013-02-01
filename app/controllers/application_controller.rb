@@ -9,12 +9,16 @@ class ApplicationController < ActionController::Base
     user = User.find user_id
     session[:user] = {
       :id => user.id,
-      :nickname => user.nickname
+      :email => user.email,
+      :nickname => user.nickname,
     }
   end
 
   def authorized_user
     @current_user = User.find_by_id session[:user][:id] unless session[:user].nil?
+    unless session[:user].nil?
+      session[:user][:profile_image] = profile_image if session[:user][:profile_image].nil?
+    end
   end
 
   def authorize

@@ -3,23 +3,28 @@ require 'bow_room'
 
 class KennelController < ApplicationController
 
-  before_filter :authorize, :except => [:bark]
+#  before_filter :authorize, :except => [:bark]
+  before_filter :authorize
+
+  def enter
+    
+  end
 
   def bark
-    # @kennel_id = params[:room_id]
-    # @nickname = @current_user.nickname
+    @kennel_id = params[:room_id]
+    @nickname = @current_user.nickname
     @viewport = true
-    @kennel_id = 1
-    @nickname = 'jeong'
+    # @kennel_id = 1
+    # @nickname = 'jeong'
 
     # for 규용
-    #k = Bow::Room::KennelManager.instance.kennel params[:room_id]
-    #k.enter session[:user]
+    k = Bow::Room::KennelManager.instance.kennel params[:room_id]
+    k.enter session[:user]
 
 
-    #if params[:permit] != "creator"
-    #  sns_send "all", "#{k.title} 토론방에 참여했습니다", k
-    #end
+    if params[:permit] != "creator"
+      sns_send "all", "#{k.title} 토론방에 참여했습니다", k
+    end
   end
 
   def create

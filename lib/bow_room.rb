@@ -39,7 +39,7 @@ module Bow
 
     # 채팅방 객체
     class Kennel
-      attr_reader :id, :positive_label, :negative_label
+      attr_reader :id, :positive_label, :negative_label, :users
       attr_accessor :title
 
 
