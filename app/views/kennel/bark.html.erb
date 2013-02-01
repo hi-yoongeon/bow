@@ -115,7 +115,7 @@
 </div>
 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script src="http://code.jquery.com/mobile/1.3.0-beta.1/jquery.mobile-1.3.0-beta.1.js"></script>
-<script src="http://192.168.173.185:8000/socket.io/socket.io.js"></script>
+<script src="http://seoho.me:8000/socket.io/socket.io.js"></script>
 <script type="text/javascript">
 $(document).bind('pageinit', function() {
 
@@ -174,8 +174,8 @@ function socketInit(config) {
 
   var chatWindow = config.chatWindow || $('#chat');
   var messageBox = config.messageBox || $('#message');
-  var myName = 'asdf';
-  var myRoom = '1';
+  var myName = '<%=@nicknamex%>';
+  var myRoom = '<%=@kennel_id%>';
 
 
   var chatStr = function(msg, profile) {
@@ -261,7 +261,7 @@ function socketInit(config) {
 };
 
 socketInit({
-  connectTo: 'http://192.168.173.185:8000/chat',
+  connectTo: 'http://seoho.me:8000/chat',
   chatWindow: $('.chat_list'),
   messageBox: $('.input_window')
 });
