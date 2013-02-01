@@ -1,7 +1,10 @@
 	<div class="main_top">
 		<a href="/" class="top_logo" title="bow 메인화면으로 가기"><img src="/images/top_logo.png" width="196" height="27" alt="bow" ></a>
+		<% if @current_user.nil? %>
 		<a href="/signin" class="btn_login"><img src="/images/log_in.png" width="132" height="47" alt="login" ></a>
+		<% else %>
 		<a href="/logout" class="btn_logout"><img src="/images/log_out.png" width="132" height="47" alt="logout" ></a>
+		<% end %>
 	</div>
 	<div class="main_display">
 		<div class="main_profile_photo_frame circle">
