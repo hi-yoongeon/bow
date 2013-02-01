@@ -178,6 +178,7 @@ function socketInit(config) {
   var myRoom = '<%=@kennel_id%>';
 
 
+  socket.emit('join', {roomName:myRoom, nickName:myName});
   var chatStr = function(msg, profile) {
   return '<li class="chat bl">'
     + '<div class="chatter_wrapper">'
@@ -218,7 +219,8 @@ function socketInit(config) {
      });
 
   socket.on('message', function(data) {
-    showMessage(data.nickName + ' : ' + data.msg); 
+    console.log( data );
+    showMessage(data.nickName + ' : ' + data.msg, data.msg); 
   });
 
   window.submit_text = function(t) {
