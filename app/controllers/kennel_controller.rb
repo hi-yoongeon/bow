@@ -2,11 +2,13 @@ require 'bow_room'
 
 class KennelController < ApplicationController
 
-  before_filter :authorize
+  before_filter :authorize, :except => [:bark]
 
   def bark
-    @kennel_id = params[:room_id]
-    @nickname = @current_user.nickname
+    # @kennel_id = params[:room_id]
+    # @nickname = @current_user.nickname
+    @kennel_id = 1
+    @nickname = 'jeong'
   end
 
   def create
