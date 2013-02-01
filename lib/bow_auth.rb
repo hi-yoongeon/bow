@@ -6,7 +6,7 @@ module Bow
     class Twitter
       CONSUMER_KEY = "dX2ETek44FXOmLYexqJ1xA"
       CONSUMER_SECRET = "PM0mLkZyieTTW6SiknR26T59o9Icd0caprB2U7TU"
-      CALLBACK_URL = "http://snsrc.daum.net:3000/signin/twitter/callback"
+      CALLBACK_URL = "http://aiem.me:3000/signin/twitter/callback"
 
       attr_reader :client
 
@@ -57,7 +57,7 @@ module Bow
     class Facebook
       APPLICATION_ID = "372779472820178"
       APPLICATION_SECRET = "2c3fe5a80db0daf3345d1ba9be1c0aa2"
-      CALLBACK_URL = "http://snsrc.daum.net:3000/signin/facebook/callback"
+      CALLBACK_URL = "http://aiem.me:3000/signin/facebook/callback"
 
       attr_reader :client
 
