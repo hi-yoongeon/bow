@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   def sns_message
     k = Bow::Room::KennelManager.instance.kennel, params[:kennel_id] unless params[:kennel_id].nil?
     sns_send params[:type], params[:msg], k
-#    render :text => "200"
+    render :text => "OK"
   end
 
   protected
