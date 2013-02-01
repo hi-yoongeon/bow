@@ -2,8 +2,6 @@ require 'bow_auth'
 
 class AuthController < ApplicationController
 
-  layout false
-
   def signin
     @redirect_url = params[:redirect_url]
   end
