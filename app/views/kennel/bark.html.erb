@@ -256,17 +256,17 @@ function socketInit(config) {
 
   var chatWindow = config.chatWindow || $('#chat');
   var messageBox = config.messageBox || $('#message');
-  var myName = '<%=@nicknamex%>';
+  var myName = '<%=@nickname%>';
   var myRoom = '<%=@kennel_id%>';
+  var profileImage = '<%=@profile_image%>';
 
-
-  socket.emit('join', {roomName:myRoom, nickName:myName});
+  socket.emit('join', {roomName:myRoom, nickName:myName, profileImage: profileImage});
   var chatStr = function(nick, msg, profile, isMine) {
     
   return '<li class="chat ' + (isMine ? 'bl' : 'wh') + '">'
     + '<div class="chatter_wrapper">'
       + '<div>'
-        + '<img src="/images/pic.jpeg" class="profile" alt="" />'
+        + '<img src="' + profile + '" class="profile" alt="" />'
       + '</div>'
       + '<div>'
         + '<div>'
@@ -280,11 +280,12 @@ function socketInit(config) {
 
 
 
-  var showMessage = function(msg, m, isMine, nick) {
+  var showMessage = function(msg, m, isMine, nick, profile_img) {
     console.log(msg);
-    chatWindow.append($(chatStr(nick, m, undefined, isMine)));     
+    chatWindow.append($(chatStr(nick, m, profile_img, isMine)));     
     chatWindow.listview('refresh');
     chatWindow.scrollTop(chatWindow.height());
+scrollTo(0,document.body.scrollHeight);
   }
 
   socket.on('connect', function() {
@@ -293,7 +294,7 @@ function socketInit(config) {
 
   socket.on('joined', function(data) {
     if(data.isSuccess) {
-      showMessage(data.nickName + '님이 입장하셨습니다.');
+      //showMessage(data.nickName + '님이 입장하셨습니다.');
     }
   });
 
@@ -303,15 +304,15 @@ function socketInit(config) {
 
   socket.on('message', function(data) {
     console.log( data );
-    showMessage(data.nickName + ' : ' + data.msg, data.msg, false, data.nickName); 
+    showMessage(data.nickName + ' : ' + data.msg, data.msg, false, data.nickName, data.profileImage); 
   });
 
   window.submit_text = function(t) {
     var msg = messageBox.val();
     console.log('>>', msg);
     if ($.trim(msg) !== '') {
-      showMessage(myName + ' : ' + msg, msg, true, myName);
-      socket.json.send({nickName:myName, msg:msg});
+      showMessage(myName + ' : ' + msg, msg, true, myName, profileImage);
+      socket.json.send({nickName:myName, msg:msg, profileImage: profileImage});
       messageBox.val('');
     }
 

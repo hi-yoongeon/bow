@@ -11,9 +11,12 @@ class KennelController < ApplicationController
   end
 
   def bark
+    p session
     @kennel_id = params[:room_id]
-    @nickname = @current_user.nickname
+    p session["user"][:nickname]
+    @nickname = session["user"][:nickname]
     @viewport = true
+    @profile_image = session["user"][:profile_image]
     # @kennel_id = 1
     # @nickname = 'jeong'
 
