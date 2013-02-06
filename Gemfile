@@ -40,4 +40,4 @@ gem 'jquery-mobile-rails'
 
 gem 'twitter_oauth'
 gem 'facebook_oauth'
-
+gem 'thin'

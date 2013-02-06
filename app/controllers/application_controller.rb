@@ -35,13 +35,13 @@ class ApplicationController < ActionController::Base
 
 
   def sns_send type, msg, kennel = nil
-  #   if type == "all"
-  #     twitter_oauth.send msg, kennel unless twitter_oauth.nil?
-  #     facebook_oauth.send msg, kennel unless facebook_oauth.nil?
-  #   end
+     if type == "all"
+       twitter_oauth.send msg, kennel unless twitter_oauth.nil?
+       facebook_oauth.send msg, kennel unless facebook_oauth.nil?
+     end
 
-  #   twitter_oauth.send msg, kennel if type == "twitter"
-  #   facebook_oauth.send msg, kennel if type == "facebook"
+     twitter_oauth.send msg, kennel if type == "twitter"
+     facebook_oauth.send msg, kennel if type == "facebook"
   end
 
   def profile_image

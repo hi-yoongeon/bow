@@ -1,4 +1,4 @@
-var socket = io.connect('http://seoho.me:8000/chat');
+var socket = io.connect('http://io.bow.gg/chat');
 
 var chatWindow = $('#chat');
 var messageBox = $('#message');
@@ -60,16 +60,10 @@ function Call(){
 	return "채팅방을 나가시겠습니까?";
 }
 
-/*
-function Call2(){
-	$.get("http://seoho.me:3000/seohohoo");	
-}
-*/
 
 
 $(window).unload( function(){
 					  alert("TEST");
-					  $.get("http://seoho.me:3000/seohohoo");	
 } );
 
 

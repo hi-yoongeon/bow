@@ -6,7 +6,7 @@ module Bow
     class Twitter
       CONSUMER_KEY = "dX2ETek44FXOmLYexqJ1xA"
       CONSUMER_SECRET = "PM0mLkZyieTTW6SiknR26T59o9Icd0caprB2U7TU"
-      CALLBACK_URL = "http://seoho.me:3000/signin/twitter/callback"
+      CALLBACK_URL = "http://bow.gg/signin/twitter/callback"
 
       attr_reader :client
 
@@ -38,7 +38,7 @@ module Bow
 
       def send message, kennel
         message = message[0..90]
-        message = message + " http://seoho.me:3000/bark/#{kennel.id}" unless kennel.nil?
+        message = message + " http://bow.gg/bark/#{kennel.id}" unless kennel.nil?
         tweet message
       end
 
@@ -59,7 +59,7 @@ module Bow
     class Facebook
       APPLICATION_ID = "372779472820178"
       APPLICATION_SECRET = "2c3fe5a80db0daf3345d1ba9be1c0aa2"
-      CALLBACK_URL = "http://seoho.me:3000/signin/facebook/callback"
+      CALLBACK_URL = "http://bow.gg/signin/facebook/callback"
 
       attr_reader :client
 
@@ -77,7 +77,7 @@ module Bow
       end
 
       def send message, kennel
-        message = message + " http://seoho.me:3000/bark/#{kennel.id}" unless kennel.nil?
+        message = message + " http://bow.gg/bark/#{kennel.id}" unless kennel.nil?
         @client.me.feed(:create, :message => message)
       end
 

@@ -52,7 +52,7 @@ class KennelController < ApplicationController
 #    if sns == "twitter"
 #      message = message[0..90]
 #    end
-#    message + " http://seoho.me:3000/bark/#{kennel.id}"
+#    message + " http://bow.gg/bark/#{kennel.id}"
 #  end
 
 end
