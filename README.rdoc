@@ -6,7 +6,9 @@ rails 3.9.2
 rake 10.0.3
 
 hosts
+
   175.118.124.150		bow.gg
+
   175.118.124.150		io.bow.gg
 
 == Getting Started
