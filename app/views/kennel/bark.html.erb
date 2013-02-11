@@ -1,362 +1,267 @@
-<!--h2>채팅방</h2>
-<input type="hidden" id="myName" value="<%=@nickname%>" />
-<input type="hidden" id="myRoom" value="<%=@kennel_id%>" />
-<div id="chat" style="overflow-y:scroll;width:400px;height:200px;border:1px solid black;"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <!--meta name="apple-mobile-web-app-capable" content="yes" /-->
+    <meta charset="UTF-8" />
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+    <style type="text/css">
+      body {padding:0 200px;}
+      @media only screen and (max-device-width: 640px) {
+        body {padding:0;}
+      }
 
-<form>
-	<input id="message" type="text" style="width:300px;">
-	<input type="submit" value="send">
-</form>
-
-
-
-<script src="http://io.bow.gg/socket.io/socket.io.js"></script>
-<script src="/javascripts/bark.js"></script-->
-
-
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0-beta.1/jquery.mobile-1.3.0-beta.1.min.css" />
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css">
-<style type="text/css">
-  * {font-family: 'Nanum Gothic', sans-serif;}
-  .profile {float:left;margin:0;-webkit-border-radius:50em}
-  .header {height:36px;opacity:0.9}
-
-  .header .ui-title {margin-left:9px;width:270px}
-  .header .right_btn {margin-top:-3px;padding:5px;width:25px;}
-  .header .profile {}
-  .header .extended_info .time_info {font-size:28px;text-align:center}
-  .header .extended_info .user_list {float:left;border-top:1px solid #000;margin-top:18px;width:100%;}
-  .header .extended_info .user_list ul {float:left;margin-top:0;padding:12px}
-  .header .extended_info .user_list li {float:left;margin-right:5px;}
-  .header .extended_info .user_count {float:left;margin-top:18px;}
-  .header .extended_info .user_count span {color:#15aeff}
-  .header .extended_info .users {float:right;margin-top:11px;margin-right:5px;}
-
-
-  .chat_list li {overflow:hidden;background-color:#fff;border-top-width:0;}
-  .chat_list .profile {}
-  .chat_list .bl .chatter_wrapper div {float:right}
-  .chat_list .wh .chatter_wrapper div {float:left}
-  .chat_list .chatter_wrapper .chatter_info {display:block;font-size:10px;color:#cecfd2;clear:both;}
-  .chat_list .bl .chatter_wrapper .chatter_info {text-align:right;padding-right:14px;}
-  .chat_list .wh .chatter_wrapper .chatter_info {text-align:left;padding-left:14px;}
-  .chat_list .chatter_wrapper .chatter {float:left;line-height:20px;padding:0 4px;border-radius:6px}
-  .chat_list .bl .chatter_wrapper > div:nth-child(2) > div:nth-child(1) {background:url('/images/speech_bubble_right.png') no-repeat;background-size:8px 6px;background-position:116px 9px;margin-bottom:3px}
-  .chat_list .wh .chatter_wrapper > div:nth-child(2) > div:nth-child(1) {background:url('/images/speech_bubble_left.png') no-repeat;background-size:8px 6px;background-position:3px 9px;margin-bottom:3px}
-  .chat_list .bl .chatter {margin:0 10px 0 0;background:#90909a;color:#fff;text-shadow:none;}
-  .chat_list .wh .chatter {margin:0 0 0 10px;background:#f3f3f3;color:#000;}
+      * {margin:0;padding:0;font-family:'Nanum Gothic', sans-serif;}
+      /*
+      body {width:100%;height:100%;}
+      body {min-height:540px;}
+      body[orient='portrait'] {min-height:540px;}
+      body[orient='landscape'] {min-height:400px;}
+      */
+      .wrapper {float:left;width:100%;height:100%;}
+      .header {width:100%;height:28px;
+        padding-top:4px;padding-bottom:4px;background:#000;}
+      .header .logo {float:left;height:100%;}
+      .header .chat_title {float:left;width:75%;
+        margin-left:4px;
+        line-height:26px;font-size:20px;color:#fff;}
+      .header .chat_title.ellipsis {overflow:hidden;text-overflow:ellipsis;
+        white-space:nowrap}
+      .header .expand_info {float:right;margin-right:4px;height:100%;} 
+      .expanded_header {height:100px;background:#000;color:#fff;}
+      .pold {display:none}
 
 
-  .input_btn {margin:4px 0 0 10px}
-  .input_window {/*float:left;*/width:205px}
-  .footer {padding-left:7px;padding-right:4px;}
-  .input_wrapper {float:left;width:78%}
-  .footer > .ui-btn {margin:13px 0 0 10px;}
-  //body {-webkit-overflow-scrolling: touch;} 
-  .share_menu {height:30px;background:#c1c1c1;box-shadow:inset 0 8px 8px -8px #696868, inset 0 -8px 8px -8px #696868;}
-  .share_menu > span {float:left;display:block}
-  .share_menu .ui-btn {float:right;margin-top:0px;}
+      .footer {width:100%;height:36px;background:#c1c1c1;}
+      .footer .input {float:left;width:80%;margin:4px;font-size:20px;height:24px;}
+      .footer .submit {width:14%;height:25px;margin:4px;font-size:10px;}
 
-    #sharePopup {display:block;width:200px;height:158px;opacity:0.9}
-    #sharePopup .popup_title img {float:left}
-    #sharePopup .popup_title span {float:left;display:block;line-height:24px;padding-left:8px}
-    #sharePopup .popup_msg {clear:both;padding:10px;background:url('speech_bubble_left.png') no-repeat;background-position:0 13px}
-    #sharePopup .popup_msg span {display:block;line-height:28px;height:28px;background:#fff;text-shadow:none;border-radius:6px;text-align:center;color:black}
-    #sharePopup .popup_sns span {float:left;color:#c1c1c1;}
-    #sharePopup .popup_sns img {float:left;margin-left:4px;}
-    #sharePopup .popup_btn {border-top:1px solid #000;margin-top:43px;padding-top:10px;text-align:center;}
-
-
-</style>
+      .body {width:100%;height:100%;overflow:auto}
+      .body {-webkit-overflow-scrolling: touch;}
+      .body > * {-webkit-transform: translateZ(0px);}
+      
+      /* 대화내용 */
+      .chatter_wrapper {margin:5px;height:35px}
+      .chatter_wrapper .profile_img {margin:0;border-radius:50em}
+      
+      .chatter_wrapper.bl > div {float:left}
+      .chatter_wrapper.bl > div:nth-child(2) {margin-left:5px}
+      .chatter_wrapper.bl .chatter_info {float:left;font-size:10px;color:#cecfd2}
+      .chatter_wrapper.wh > div {float:right}
+      .chatter_wrapper.wh > div:nth-child(2) {margin-right:5px}
+      .chatter_wrapper .chatter {text-align:right}
+      .chatter_wrapper.wh .chatter_info {float:right;font-size:10px;color:#cecfd2}
 
 
-
-<div class="ui-responsive-panel" data-role="page">
-  <div id="leftPanel" data-role="panel">
-    <div>
-      B
-    </div>
-  </div>
-  <div id="rightPanel" data-role="panel" data-position="right">
-    <div>
-      W
-    </div>
-  </div>
-
-    <div id="sharePopup" data-role="popup" data-theme="a" data-overlay-theme="a" class="ui-content"> 
-      <div class="popup_title">
-        <img src="profile_white_dog.png" width="28" height="24" alt="" /><span>대화 공유하기</span>
+    </style>
+</head>
+<body>
+  <section class="wrapper">
+    <header class="header">
+      <img class="logo" src="profile_white_dog.png" alt="" />
+      <h1 class="chat_title ellipsis">대대화제목대화제목대화대화제목대화제목대화화제목대화제목대화제목</h1>
+      <img class="expand_info" src="top_arrow_down.png" alt="" />
+    </header>  
+    <section class="expanded_header pold">
+    </section>
+    <section class="body">
+      <div class="content">
+          
       </div>
-      <div class="popup_msg">
-        <span class="msg">배신자에게는 죽음뿐!!</span>
-      </div>
-      <div class="popup_sns">
-        <span>SNS</span>
-        <img src="co_share_f_d.png" class="share_fb" width="80" height="23" alt="" />
-        <img src="co_share_t_d.png" class="share_tw" width="80" height="23" alt="" />
-      </div>
-      <div class="popup_btn">
-        <img src="co_share_bt.png" class="send_btn" width="90" height"31" alt="" />
-        <img src="co_share_cancel.png" class="cancel_btn" width="90" height"31" alt="" />
-      </div>
-    </div>
-
-
-  <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
-    <h1><%=@title%></h1>
-    <!--a href="#" class="left_panel" data-role="button" data-icon="bars" data-mini="true">B</a-->
-    <!--a href="#sharePopup" class="left_panel" data-rel="popup" data-position-to="window" data-icon="bars" data-mini="true">B</a>
-    <div data-role="popup" class="photopopup" id="sharePopup">
-      popup
-    </div-->
-    <a href="#" class="right_btn fold ui-btn-right" data-role="none"><img src="/images/top_arrow_down.png" width="27" height="27" alt="" /></a>
-    <div class="extended_info" style="display:none">
-       <div class="time_info">
-         01:36분 대화중 ;]
-       </div>
-       <div class="user_list">
-         <ul>
-           <li><img class="profile" width="30" height="30" src="/images/pic.jpeg" alt="" /></li>
-           <li><img class="profile" width="30" height="30" src="/images/pic.jpeg" alt="" /></li>
-           <li><img class="profile" width="30" height="30" src="/images/pic.jpeg" alt="" /></li>
-           <li><img class="profile" width="30" height="30" src="/images/pic.jpeg" alt="" /></li>
-         </ul>
-         <div class="user_count">
-           외 <span>345</span>명
-         </div>
-         <a class="users" href="#" data-role="button" data-mini="true">전체보기</a>
-       </div>
-    </div>
-  </div>
-  <div data-role="content">
-    <ul class="chat_list" data-role="listview">
-
-
-    </ul>
-  </div>
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
-    <div class="input_wrapper" data-role="fieldcontain">
-      <label for="input" class="ui-hidden-accessible">대화입력</label>
-      <input class="input_window" type="text" name="input" value=""  /> 
-    </div>
-    <button class="input_btn">입력</button>
-  </div>
-</div>
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script src="http://code.jquery.com/mobile/1.3.0-beta.1/jquery.mobile-1.3.0-beta.1.js"></script>
+    </section>
+    <footer class="footer">
+      <textarea type="text" class="input" name="" rows="1"></textarea>
+      <button class="submit">입력</button>
+    </footer>
+  </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="http://io.bow.gg/socket.io/socket.io.js"></script>
 <script type="text/javascript">
-$(document).bind('pageinit', function() {
+$(function() {
+  function BoW(){};
+  BoW = {
+    chatData: null,
+    myName: '<%=@nickname%>',
+    myProfileImg: '<@=profile_image%>',
+    myRoom: '<%=@kennel_id%>',
+    
+    init: function() {
+      this.appSizeInit();
+      this.titleBarExpand();
+      this.chatWindowInit();
+      this.socketIOInit({
+        connectTo: 'http://io.bow.gg/chat'
+      });
+    },
+    appSizeInit: function() {
+      $('body').height($(window).height() - 72);
+    },
+    makeData: function(nick, /*profile*/img, talk, time, flag) {
+      var html;
+    
+      html = '<div class="chatter_wrapper' + (flag ? ' bl' : ' wh') + '">'
+        + '<div>'
+          + '<img src="' + img + '" width="30" height="30" class="profile_img" alt="' + nick + '" />'
+        + '</div>'  
+        + '<div>'
+          + '<div>'
+            + '<p class="chatter">' + talk + '</p>'
+          + '</div>' 
+          + '<span class="chatter_info">' + nick /* + time */ + '</span>' // 상대시간을 적어줘야할지 절대시간을 적어줘야할지 
+        + '</div>'
+      + '</div>';
 
-  //$(document.body).css('min-height', window.innerHeight + 41 + 'px');
-  //$('html, body').animate({scrollTop: $(document.body).height()}, 1000);
-  $('.left_panel').on('click', function() {
-    //$('#leftPanel').panel('open');
-  });
-  $('.right_panel').on('click', function() {
-    $('#rightPanel').panel('open');
-  });
-  $('.right_btn').on('click', function() {
-    if ( $(this).hasClass('fold') ) {
-      $(this).removeClass('fold');
-      $('.header').height(164);
-      $('.extended_info').show();
-      $('.header > .ui-title').css('white-space', 'normal');
-    } else {
-      $(this).addClass('fold');
-      $('.header').height(36)
-      $('.extended_info').hide();
-      $('.header > .ui-title').css('white-space', 'nowrap');
-    }
-  });
+      return html;
+    },
+    titleBarInit: function() {
+      this.titleBarExpand();
+    },
+    titleBarExpand: function() {
+      var expandedHeader = $('.expanded_header')
+        , chatTitle = $('.chat_title');
 
-
-  $('.chatter').on('click', function() {
-    $('#sharePopup .msg').html(this.innerHTML);
-    $('#sharePopup').popup('open');
-  });
-
-
-  $('#sharePopup .share_fb').on('click', function() {
-    if ($(this).hasClass('fb_selected')) {
-      $(this).removeClass('fb_selected');
-      $(this).attr('src', 'co_share_f_d.png');
-    } else {
-      $(this).addClass('fb_selected');
-      $(this).attr('src', 'co_share_f.png');
-    }
-  });
-
-  $('#sharePopup .share_tw').on('click', function() {
-    if ($(this).hasClass('tw_selected')) {
-      $(this).removeClass('tw_selected');
-      $(this).attr('src', 'co_share_t_d.png');
-    } else {
-      $(this).addClass('tw_selected');
-      $(this).attr('src', 'co_share_t.png');
-    }
-  });
-
-  $('#sharePopup .send_btn').on('click', function() {
-    var type, msg, kennel_id;
-    if ($('#sharePopup .fb_selected').length > 0 && $('#sharePopup .tw_selected').length > 0) {
-      type = 'all';
-    } else if ($('#sharePopup .fb_selected').length > 0) {
-      type = 'facebook';
-    } else if ($('#sharePopup .tw_selected').length > 0) {
-      type = 'twitter';
-    } else {
-      type = '';
-    }
-
-    msg = $('#sharePopup .msg').html();
-    kennel_id = '<%=@kennel_id%>';
-
-    if (type !== '') {
-      $.ajax({
-        type: 'GET',
-        url: '/sns/message',
-        data: {type: type, msg: msg, kennel_id: kennel_id}
-      }).done(function(msg) {
-        if (msg === 'ok') {
-          alert('ok');
+      $('.expand_info').on('click', function(ev) {
+        if (expandedHeader.hasClass('pold')) {
+          expandedHeader.removeClass('pold')
+          chatTitle.removeClass('ellipsis')
+          $('.body').height($('.body').height() - 100);
+        } else {
+          expandedHeader.addClass('pold')
+          chatTitle.addClass('ellipsis')
+          $('.body').height($('.body').height() + 100);
         }
       });
-    }
-  });
+    },
+    chatWindowInit: function() {
+      this.chatSubmit(this.makeData);
+      this.chatWindowControl();
+    },
+    chatSubmit: function(makeData) {
+      var content = $('.content')
+        , body = $('.body')
+        , input = $('.input')
+        
+        , nick = data.nickName || ''
+        , img = data.profileImage || ''
+        , msg = data.msg || '' 
+        , time = data.time || undefined 
+        , flag = data.flag || true;
 
-  $('#sharePopup .cancel_btn').on('click', function() {
-    $('#sharePopup').popup('close');
-  });
+      /*
+      $('form').submit(function(ev) {
+        ev.preventDefault();
+        content.append(makeData(nick, img, input.val(), time, flag));
+        body.scrollTop(content.height());
+        input.val('');
+      });
+      */
+      input.on('keydown', function(ev) {
+        if (ev.keyCode === 13 && $.trim(input.val()) !== '') {
+          flag = !!(new Date()%2);  
+          content.append(makeData(nick, img, msg, time, flag));
+          body.scrollTop(content.height());
+          socket.json.send({nickName:myName, msg:msg});
+          input.val(''); 
+        }
+      });
 
-
-  $('.chat').on('click', function(){
-    //$(this).next().toggle();
-  });
-  $('.input_window').on('click', function() {
-    //$(this).fixedtoolbar('updatePagePadding');
-    //$('html, body').animate({scrollTop: $(document).height()}, 'slow');
-    //return false;
-  });
-  $('.input_window').on('keypress', function(e) {
-    if (e.keyCode === 13) {
-      submit_text(this);
-    }
-  });
-  $('.input_btn').on('click', function(e) {
-    submit_text(this);
-  });
-
-});
-
-
-
-function socketInit(config) {
-  var socket = io.connect(config.connectTo || 'http://localhost');
-
-  var chatWindow = config.chatWindow || $('#chat');
-  var messageBox = config.messageBox || $('#message');
-  var myName = '<%=@nickname%>';
-  var myRoom = '<%=@kennel_id%>';
-  var profileImage = '<%=@profile_image%>';
-
-  socket.emit('join', {roomName:myRoom, nickName:myName, profileImage: profileImage});
-  var chatStr = function(nick, msg, profile, isMine) {
+      $('button.submit').on('click', function(ev) {
+        ev.preventDefault();
+        if (input.val() !== '') {
+          content.append(makeData(nick, img, msg, time, flag));
+          body.scrollTop(content.height());
+          socket.json.send({nickName:myName, msg:msg});
+          input.val('');
+        }
+      });
+    },
+    chatWindowControl: function() {
+      /* input에 포커스가 되었을때 virtual keyboard가 올라감에 따라 
+       * input 위치의 변동 필요.
+       * position:fixed 사용시 input위치의 이상현상 발생(아이폰). 
+       * 그래서 virtual keyboard가 나올때의 scrollTop을 .body 높이에 적용
+       */
+      $('input').on('focus', function(ev) {
+        $('body').height($(window).height() - $('body').scrollTop())
+        $('.body').height(372 - $('body').scrollTop());
+        $('body').scrollTop(0);
+      });
+    },
     
-  return '<li class="chat ' + (isMine ? 'bl' : 'wh') + '">'
-    + '<div class="chatter_wrapper">'
-      + '<div>'
-        + '<img src="' + profile + '" class="profile" alt="" />'
-      + '</div>'
-      + '<div>'
-        + '<div>'
-          + '<p class="chatter">' + msg + '</p>'
-        + '</div>'
-        + '<span class="chatter_info">' + nick + '</span>'
-      + '</div>'
-    + '</div>'
-  + '</li>';
+    /* related to socket.io */
+    socket: null,
+    socketIOInit: function(config) {
+      var socket = io.connect(config.connectTo || 'http://localhost:3000')
+        , myRoom = this.myRoom
+        , myName = this.myName
+        , profileImage = this.myProfileImg;
+        
+      socket.emit(
+        'join',
+        { roomName: myRoom, nickName: myName, profileImage: profileImage });
+        
+      this.socketOn(socket, this.makeData);
+      this.socketEmit(socket);
+    },
+    socketOn: function(socket, makeData) {
+      var content = $('.content')
+        , body = $('.body');
+        
+      socket.on('connect', function(data) {
+        console.log('connect');
+      });
+      
+      socket.on('joined', function(data) {
+        if ( data.isSuccess ) {
+          //showMessage(data.nickName + '님이 입장하셨습니다.');
+          console.log(data.nickName + '님이 입장하셨습니다.');
+        }
+      });
+      
+      socket.on('leaved', function(data) {
+        //showMessage(data.nickName + '님이 나가셨습니다.');
+        console.log(data.nickName + '님이 나가셨습니다.');
+      });
+
+      socket.on('message', function(data) {
+        var nick = data.nickName || ''
+          , img = data.profileImage || ''
+          , msg = data.msg || ''
+          , time = data.time || '' // 대화 입력 시간
+          , flag = data.flag || true; // 좌우 구분 
+        content.append(makeData(nick, img, input.val(), time, flag));
+        body.scrollTop(content.height());
+        console.log( data );
+      });
+      
+    },
+    socketEmit: function(socket) {
+      var myRoom = this.myRoom
+        , myName = this.myName;
+        
+      // 추후 수정 필요 
+      $('#joinBtn').click(function(e) {
+        console.log(myRoom);
+        socket.emit('join', {roomName:myRoom, nickName:myName});
+        //location.href='/';
+      });
+      $('#leaveBtn').click(function(e) {
+        socket.emit('leave', {nickName:myName});
+        //location.href='/';
+      });
+      $('#saveBtn').click(function(e) {
+        myRoom = $('#myRoom').val();
+        myName = $('#myName').val();
+        console.log(myRoom, myName);		
+        //location.href='/';
+      });     
+    }
   };
+  BoW.init();
 
-
-
-  var showMessage = function(msg, m, isMine, nick, profile_img) {
-    console.log(msg);
-    chatWindow.append($(chatStr(nick, m, profile_img, isMine)));     
-    chatWindow.listview('refresh');
-    chatWindow.scrollTop(chatWindow.height());
-scrollTo(0,document.body.scrollHeight);
-  }
-
-  socket.on('connect', function() {
-    //socket.emit('join', {roomName:$('#roomName').text(), nickName:myName}); 
-  });
-
-  socket.on('joined', function(data) {
-    if(data.isSuccess) {
-      //showMessage(data.nickName + '님이 입장하셨습니다.');
-    }
-  });
-
-  socket.on('leaved', function(data) {
-        showMessage(data.nickName + '님이 나가셨습니다.');
-     });
-
-  socket.on('message', function(data) {
-    console.log( data );
-    showMessage(data.nickName + ' : ' + data.msg, data.msg, false, data.nickName, data.profileImage); 
-  });
-
-  window.submit_text = function(t) {
-    var msg = messageBox.val();
-    console.log('>>', msg);
-    if ($.trim(msg) !== '') {
-      showMessage(myName + ' : ' + msg, msg, true, myName, profileImage);
-      socket.json.send({nickName:myName, msg:msg, profileImage: profileImage});
-      messageBox.val('');
-    }
-
-  }
-
-  $('form').submit(function(e) {
-    console.log("k");
-    e.preventDefault();
-    var msg = messageBox.val();
-    console.log('>>', msg);
-    if ($.trim(msg) !== '') {
-      showMessage(myName + ' : ' + msg);
-      socket.json.send({nickName:myName, msg:msg});
-      messageBox.val('');
-    }
-  });
-  $('#joinBtn').click(function(e) {
-    console.log(myRoom);
-    socket.emit('join', {roomName:myRoom, nickName:myName});
-    //location.href='/';
-  });
-  $('#leaveBtn').click(function(e) {
-    socket.emit('leave', {nickName:myName});
-    //location.href='/';
-  });
-  $('#saveBtn').click(function(e) {
-    myRoom = $('#myRoom').val();
-    myName = $('#myName').val();
-    console.log(myRoom, myName);		
-    //location.href='/';
-  });
-};
-
-socketInit({
-  connectTo: 'http://io.bow.gg/chat',
-  chatWindow: $('.chat_list'),
-  messageBox: $('.input_window')
 });
-
 </script>
-
-
-
-
-
-
+</body>
+</html>
 
