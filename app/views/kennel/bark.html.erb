@@ -1,80 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
-    <!--meta name="apple-mobile-web-app-capable" content="yes" /-->
-    <meta charset="UTF-8" />
-    <title>Test</title>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css">
-    <style type="text/css">
-      body {padding:0 200px;}
-      @media only screen and (max-device-width: 640px) {
-        body {padding:0;}
-      }
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+<style type="text/css">
+  body {padding:0 200px;}
+  @media only screen and (max-device-width: 640px) {
+    body {padding:0;}
+  }
 
-      * {margin:0;padding:0;font-family:'Nanum Gothic', sans-serif;}
-      /*
-      body {width:100%;height:100%;}
-      body {min-height:540px;}
-      body[orient='portrait'] {min-height:540px;}
-      body[orient='landscape'] {min-height:400px;}
-      */
-      .wrapper {float:left;width:100%;height:100%;}
-      .header {width:100%;height:28px;
-        padding-top:4px;padding-bottom:4px;background:#000;}
-      .header .logo {float:left;height:100%;}
-      .header .chat_title {float:left;width:75%;
-        margin-left:4px;
-        line-height:26px;font-size:20px;color:#fff;}
-      .header .chat_title.ellipsis {overflow:hidden;text-overflow:ellipsis;
-        white-space:nowrap}
-      .header .expand_info {float:right;margin-right:4px;height:100%;} 
-      .expanded_header {height:100px;background:#000;color:#fff;}
-      .pold {display:none}
+  * {margin:0;padding:0;font-family:'Nanum Gothic', sans-serif;}
+  /*
+  body {width:100%;height:100%;}
+  body {min-height:540px;}
+  body[orient='portrait'] {min-height:540px;}
+  body[orient='landscape'] {min-height:400px;}
+  */
+  .wrapper {float:left;width:100%;height:100%;}
+  .header {width:100%;height:28px;
+    padding-top:4px;padding-bottom:4px;background:#000;}
+  .header .logo {float:left;height:100%;}
+  .header .chat_title {float:left;width:75%;
+    margin-left:4px;
+    line-height:26px;font-size:20px;color:#fff;}
+  .header .chat_title.ellipsis {overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap}
+  .header .expand_info {float:right;margin-right:4px;height:100%;} 
+  .expanded_header {height:100px;background:#000;color:#fff;}
+  .pold {display:none}
 
 
-      .footer {width:100%;height:36px;background:#c1c1c1;}
-      .footer .input {float:left;width:80%;margin:4px;font-size:20px;height:24px;}
-      .footer .submit {width:14%;height:25px;margin:4px;font-size:10px;}
+  .footer {width:100%;height:36px;background:#c1c1c1;}
+  .footer .input {float:left;width:80%;margin:4px;font-size:20px;height:24px;}
+  .footer .submit {width:14%;height:25px;margin:4px;font-size:10px;}
 
-      .body {width:100%;height:100%;overflow:auto}
-      .body {-webkit-overflow-scrolling: touch;}
-      .body > * {-webkit-transform: translateZ(0px);}
-      
-      /* 대화내용 */
-      .chatter_wrapper {margin:5px;height:35px}
-      .chatter_wrapper .profile_img {margin:0;border-radius:50em}
-      
-      .chatter_wrapper.bl > div {float:left}
-      .chatter_wrapper.bl > div:nth-child(2) {margin-left:5px}
-      .chatter_wrapper.bl .chatter_info {float:left;font-size:10px;color:#cecfd2}
-      .chatter_wrapper.wh > div {float:right}
-      .chatter_wrapper.wh > div:nth-child(2) {margin-right:5px}
-      .chatter_wrapper .chatter {text-align:right}
-      .chatter_wrapper.wh .chatter_info {float:right;font-size:10px;color:#cecfd2}
-
-
-    </style>
-</head>
-<body>
-  <section class="wrapper">
-    <header class="header">
-      <img class="logo" src="profile_white_dog.png" alt="" />
-      <h1 class="chat_title ellipsis">대대화제목대화제목대화대화제목대화제목대화화제목대화제목대화제목</h1>
-      <img class="expand_info" src="top_arrow_down.png" alt="" />
-    </header>  
-    <section class="expanded_header pold">
-    </section>
-    <section class="body">
-      <div class="content">
-          
-      </div>
-    </section>
-    <footer class="footer">
-      <textarea type="text" class="input" name="" rows="1"></textarea>
-      <button class="submit">입력</button>
-    </footer>
+  .body {width:100%;height:100%;overflow:auto}
+  .body {-webkit-overflow-scrolling: touch;}
+  .body > * {-webkit-transform: translateZ(0px);}
+  
+  /* 대화내용 */
+  .chatter_wrapper {margin:5px;height:35px}
+  .chatter_wrapper .profile_img {margin:0;border-radius:50em}
+  
+  .chatter_wrapper.bl > div {float:left}
+  .chatter_wrapper.bl > div:nth-child(2) {margin-left:5px}
+  .chatter_wrapper.bl .chatter_info {float:left;font-size:10px;color:#cecfd2}
+  .chatter_wrapper.wh > div {float:right}
+  .chatter_wrapper.wh > div:nth-child(2) {margin-right:5px}
+  .chatter_wrapper .chatter {text-align:right}
+  .chatter_wrapper.wh .chatter_info {float:right;font-size:10px;color:#cecfd2}
+</style>
+<section class="wrapper">
+  <header class="header">
+    <img class="logo" src="profile_white_dog.png" alt="" />
+    <h1 class="chat_title ellipsis">대대화제목대화제목대화대화제목대화제목대화화제목대화제목대화제목</h1>
+    <img class="expand_info" src="top_arrow_down.png" alt="" />
+  </header>  
+  <section class="expanded_header pold">
   </section>
+  <section class="body">
+    <div class="content">
+        
+    </div>
+  </section>
+  <footer class="footer">
+    <textarea type="text" class="input" name="" rows="1"></textarea>
+    <button class="submit">입력</button>
+  </footer>
+</section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="http://io.bow.gg/socket.io/socket.io.js"></script>
 <script type="text/javascript">
@@ -262,6 +251,4 @@ $(function() {
 
 });
 </script>
-</body>
-</html>
 
