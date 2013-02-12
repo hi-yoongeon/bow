@@ -13,14 +13,13 @@ Bow::Application.routes.draw do
 
   # match 'signin(/:type)' => 'user#signin'
   
-  match 'signin' => 'auth#signin'
   #match 'signin(/:action)'
+  match 'signin' => 'auth#signin'  # http://bow.gg/signin 
   match 'signin/:type/callback' => 'auth#callback'
   get 'signup' => 'user#signup'
   post 'signup' => 'user#signup_ok'
   post 'kennel/create' => 'kennel#create_ok'
   match 'logout' => 'user#logout'
-
   match 'bark/:room_id' => 'kennel#bark'
   get 'sns/message' => 'application#sns_message'
 
@@ -69,8 +68,4 @@ Bow::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id))(.:format)'
-  
-  
-
-  
 end

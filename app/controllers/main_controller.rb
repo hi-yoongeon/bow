@@ -4,8 +4,7 @@ class MainController < ApplicationController
 
   def index
     @room_list = Bow::Room::KennelManager.instance.list
-
-    p @room_list
+    # p @room_list
 
     if session[:user].nil?
       @profile_image =  "/images/4.png"

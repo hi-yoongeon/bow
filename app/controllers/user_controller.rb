@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
+
 require 'bow_auth'
 
-# -*- coding: utf-8 -*-
+
 class UserController < ApplicationController
   protect_from_forgery :except => :signup_ok
 

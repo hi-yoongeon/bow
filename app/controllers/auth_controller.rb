@@ -26,6 +26,8 @@ class AuthController < ApplicationController
     end
   end
 
+
+  private
   def twitter_callback
     auth_twitter = session[:oauth]
     p session

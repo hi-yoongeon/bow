@@ -13,11 +13,20 @@ hosts
 
 == Getting Started
 
+=== bow WEB
+
 $ bundle install
 
 $ rake db:migrate
 
-$ rails server
+$ thin -d start
+
+=== bow IO
+
+$ cd bow_io
+
+$ forver start app.js
+
 
 == Description of Contents
 
